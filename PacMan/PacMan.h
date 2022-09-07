@@ -16,7 +16,8 @@
 
 enum PacManObjects
 {
-    PLAYER,
+    PLAYER1,
+    PLAYER2,
     GHOST,
     FOOD,
     SPECIAL,

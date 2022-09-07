@@ -14,7 +14,6 @@
 #include "Level1.h"
 #include "Level2.h"
 #include "Player.h"
-#include "Player2.h"
 #include "Pivot.h"
 #include "GameManager.h"
 #include <string>
@@ -34,11 +33,11 @@ void Level1::Init()
     // cria background
     backg = new Sprite("Resources/Level1.jpg");
 
-    Player* playerOne = new Player({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 });
+    Player1* playerOne = new Player1({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 });
     playerOne->MoveTo(600.0f, 450.0f);
     scene->Add(playerOne, MOVING);
 
-    Player* playerTwo = new Player({ 'W', 'A', 'S', 'D', 'K' });
+    Player2* playerTwo = new Player2({ 'W', 'A', 'S', 'D', 'K' });
     playerTwo->MoveTo(400.0f, 450.0f);
     scene->Add(playerTwo, MOVING);
 

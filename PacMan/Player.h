@@ -47,6 +47,8 @@ private:
 	Sprite* spriteR = nullptr;         // sprite do player indo para direita
 	Sprite* spriteU = nullptr;         // sprite do player indo para cima
 	Sprite* spriteD = nullptr;         // sprite do player indo para baixo
+	float velX = 0;                     // velocidade horizontal do player
+	float velY = 0;                     // velocidade vertical do player
 
 	Image* bulletVerImg = nullptr;
 	Image* bulletHoriImg = nullptr;
@@ -54,9 +56,6 @@ private:
 	Timer* timer = nullptr;
 
 	boolean ctrlShot;
-
-	float velX = 0;                     // velocidade horizontal do player
-	float velY = 0;                     // velocidade vertical do player
 
 	MovementKeys movementKeys;
 
@@ -66,7 +65,7 @@ public:
 	float prevX;
 	float prevY;
 
-	Player(MovementKeys movementKeys);
+	Player(MovementKeys movementKeys, int type);
 	~Player();                          // destrutor
 
 	void Stop();                        // pára jogador
@@ -83,5 +82,25 @@ public:
 };
 
 // ---------------------------------------------------------------------------------
+
+class Player1 : public Player
+{
+public:
+	Player1(MovementKeys movementKeys);
+	~Player1();                         // destrutor
+
+	void OnCollision(Object* obj);     // resolução da colisão
+};
+
+// ---------------------------------------------------------------------------------
+
+class Player2 : public Player
+{
+public:
+	Player2(MovementKeys movementKeys);
+	~Player2();                         // destrutor
+
+	void OnCollision(Object* obj);     // resolução da colisão
+};
 
 #endif

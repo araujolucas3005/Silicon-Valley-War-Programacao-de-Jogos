@@ -17,7 +17,7 @@
 
 // ---------------------------------------------------------------------------------
 
-Player::Player(MovementKeys movementKeys, int type)
+Player::Player(MovementKeys movementKeys)
 {
 	this->movementKeys = movementKeys;
 
@@ -31,7 +31,7 @@ Player::Player(MovementKeys movementKeys, int type)
 
 	// imagem do pacman é 48x48 (com borda transparente de 4 pixels)
 	BBox(new Rect(-20, -20, 20, 20));
-	type = type;
+	type = PLAYER;
 
 	ctrlShot = true;
 
@@ -55,7 +55,6 @@ Player::~Player()
 
 void Player::Stop()
 {
-	currState = STOPED;
 	velX = 0;
 	velY = 0;
 }
@@ -65,7 +64,7 @@ void Player::Stop()
 void Player::Up()
 {
 	velX = 0;
-	velY = -250.0f;
+	velY = -200.0f;
 }
 
 // ---------------------------------------------------------------------------------
@@ -73,14 +72,14 @@ void Player::Up()
 void Player::Down()
 {
 	velX = 0;
-	velY = 250.0f;
+	velY = 200.0f;
 }
 
 // ---------------------------------------------------------------------------------
 
 void Player::Left()
 {
-	velX = -250.0f;
+	velX = -200.0f;
 	velY = 0;
 }
 
@@ -88,7 +87,7 @@ void Player::Left()
 
 void Player::Right()
 {
-	velX = 250.0f;
+	velX = 200.0f;
 	velY = 0;
 }
 
@@ -96,6 +95,31 @@ void Player::Right()
 
 void Player::OnCollision(Object* obj)
 {
+	if (obj->Type() == PIVOT)
+		PivotCollision(obj);
+	if (obj->Type() == PLAYER)
+	{
+		Player* player2 = (Player*) obj;
+		player2->Stop();
+		player2->currState = STOPED;
+		switch (player2->currState)
+		{
+		case UP:
+			player2->MoveTo(player2->X(), y + 50);
+			break;
+		case DOWN:
+			player2->MoveTo(player2->X(), y - 50);
+			break;
+		case LEFT:
+			player2->MoveTo(x + 50, player2->Y());
+			break;
+		case RIGHT:
+			player2->MoveTo(x - 50, player2->Y());
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 // ---------------------------------------------------------------------------------
@@ -439,10 +463,10 @@ void Player::Update()
 		Image* bulletImg = nullptr;
 
 		switch (currState) {
-			case UP: pVelX = 0; pVelY = -250.0f; pX = X(); pY = Y() - 15; bulletImg = bulletVerImg; break;
-			case LEFT: pVelX = -250.0f; pVelY = 0;  pX = X() - 15; pY = Y(); bulletImg = bulletHoriImg;  break;
-			case DOWN: pVelX = 0; pVelY = 250.0f;  pX = X(); pY = Y() + 15; bulletImg = bulletVerImg;  break;
-			case RIGHT: pVelX = 250.0f; pVelY = 0;  pX = X() + 15; pY = Y(); bulletImg = bulletHoriImg; break;
+			case UP: pVelX = 0; pVelY = -300.0f; pX = X(); pY = Y() - 15; bulletImg = bulletVerImg; break;
+			case LEFT: pVelX = -300.0f; pVelY = 0;  pX = X() - 15; pY = Y(); bulletImg = bulletHoriImg;  break;
+			case DOWN: pVelX = 0; pVelY = 300.0f;  pX = X(); pY = Y() + 15; bulletImg = bulletVerImg;  break;
+			case RIGHT: pVelX = 300.0f; pVelY = 0;  pX = X() + 15; pY = Y(); bulletImg = bulletHoriImg; break;
 		}
 
 		if (bulletImg) {
@@ -501,104 +525,6 @@ void Player::Draw()
 		default:    spriteL->Draw(x, y, Layer::UPPER);
 		}
 	}
-}
-
-/**********************************************************************************
-// Player1 (Código Fonte)
-//
-// Descrição:   Player do jogo PacMan
-//
-**********************************************************************************/
-
-Player1::Player1(MovementKeys movementKeys) : Player(movementKeys, PLAYER1)
-{
-}
-
-// ---------------------------------------------------------------------------------
-
-Player1::~Player1()
-{
-}
-
-// ---------------------------------------------------------------------------------
-
-void Player1::OnCollision(Object* obj)
-{
-	if (obj->Type() == PIVOT)
-		PivotCollision(obj);
-	if (obj->Type() == PLAYER1)
-	{
-		Stop();
-		Player2* player2 = (Player2*)obj;
-		player2->Stop();
-
-		switch (player2->currState)
-		{
-		case UP:
-			player2->MoveTo(player2->X(), y + 38);
-			break;
-		case DOWN:
-			player2->MoveTo(player2->X(), y - 38);
-			break;
-		case LEFT:
-			player2->MoveTo(x + 38, player2->Y());
-			break;
-		case RIGHT:
-			player2->MoveTo(x - 38, player2->Y());
-			break;
-		default:
-			break;
-		}
-	}
-}
-
-/**********************************************************************************
-// Player2 (Código Fonte)
-//
-// Descrição:   Player do jogo PacMan
-//
-**********************************************************************************/
-
-Player2::Player2(MovementKeys movementKeys) : Player(movementKeys, PLAYER2)
-{
-}
-
-// ---------------------------------------------------------------------------------
-
-Player2::~Player2()
-{
-}
-
-// ---------------------------------------------------------------------------------
-
-void Player2::OnCollision(Object* obj)
-{
-	if (obj->Type() == PLAYER1)
-	{
-		Stop();
-		Player1* player1 = (Player1*)obj;
-		player1->Stop();
-
-		switch (player1->currState)
-		{
-		case UP:
-			player1->MoveTo(player1->X(), y + 38);
-			break;
-		case DOWN:
-			player1->MoveTo(player1->X(), y - 38);
-			break;
-		case LEFT:
-			player1->MoveTo(x + 38, player1->Y());
-			break;
-		case RIGHT:
-			player1->MoveTo(x - 38, player1->Y());
-			break;
-		default:
-			break;
-		}
-	}
-	if (obj->Type() == PIVOT)
-		PivotCollision(obj);
 }
 
 // ---------------------------------------------------------------------------------

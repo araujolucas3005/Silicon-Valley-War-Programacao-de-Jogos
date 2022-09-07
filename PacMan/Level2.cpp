@@ -32,11 +32,11 @@ void Level2::Init()
     // cria background
     backg = new Sprite("Resources/Level2.jpg");
 
-    Player* playerOne = new Player({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 });
+    Player1* playerOne = new Player1({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 });
     playerOne->MoveTo(600.0f, 450.0f);
     scene->Add(playerOne, MOVING);
 
-    Player* playerTwo = new Player({ 'W', 'A', 'S', 'D', 'K' });
+    Player2* playerTwo = new Player2({ 'W', 'A', 'S', 'D', 'K' });
     playerTwo->MoveTo(400.0f, 450.0f);
     scene->Add(playerTwo, MOVING);
 
