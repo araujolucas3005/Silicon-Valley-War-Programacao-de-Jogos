@@ -12,7 +12,6 @@
 #include "Engine.h"
 #include "Home.h"
 #include "Level1.h"
-#include "Level2.h"
 #include "Player.h"
 #include "Pivot.h"
 #include "GameManager.h"
@@ -33,11 +32,11 @@ void Level1::Init()
     // cria background
     backg = new Sprite("Resources/Level1.jpg");
 
-    Player* playerOne = new Player({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 });
+    Player* playerOne = new Player({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 }, PLAYER1);
     playerOne->MoveTo(600.0f, 450.0f);
     scene->Add(playerOne, MOVING);
 
-    Player* playerTwo = new Player({ 'W', 'A', 'S', 'D', 'K' });
+    Player* playerTwo = new Player({ 'W', 'A', 'S', 'D', 'K' }, PLAYER2);
     playerTwo->MoveTo(400.0f, 450.0f);
     scene->Add(playerTwo, MOVING);
 
@@ -95,15 +94,11 @@ void Level1::Update()
         ctrlKeyB = true;
     }
     
-    if (window->KeyDown(VK_ESCAPE))
+    if (window->KeyDown(VK_ESCAPE) || GameManager::endGame)
     {
+        GameManager::endGame = false;
         // volta para a tela de abertura
         Engine::Next<Home>();
-    }
-    else if (window->KeyDown('N'))
-    {
-        // passa manualmente para o próximo nível
-        Engine::Next<Level2>();
     }
     else
     {

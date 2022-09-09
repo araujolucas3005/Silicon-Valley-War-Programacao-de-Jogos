@@ -17,7 +17,7 @@
 
 // ---------------------------------------------------------------------------------
 
-Player::Player(MovementKeys movementKeys)
+Player::Player(MovementKeys movementKeys, PLAYERTYPE pt)
 {
 	this->movementKeys = movementKeys;
 
@@ -25,6 +25,18 @@ Player::Player(MovementKeys movementKeys)
 	spriteR = new Sprite("Resources/PacManR.png");
 	spriteU = new Sprite("Resources/PacManU.png");
 	spriteD = new Sprite("Resources/PacManD.png");
+	letterP = new Sprite("Resources/letterP.png");
+	heart = new Image("Resources/heart.png");
+
+	if (pt == PLAYER1)
+		playerTypeSprite = new Sprite("Resources/number1.png");
+	else
+		playerTypeSprite = new Sprite("Resources/number2.png");
+	
+	for (int i = 0; i < life; i++)
+	{
+		lifeChain.push_back(new Sprite(heart));
+	}
 
 	bulletHoriImg = new Image("Resources/BulletHori.png");
 	bulletVerImg = new Image("Resources/BulletVer.png");
@@ -32,6 +44,7 @@ Player::Player(MovementKeys movementKeys)
 	// imagem do pacman é 48x48 (com borda transparente de 4 pixels)
 	BBox(new Rect(-20, -20, 20, 20));
 	type = PLAYER;
+	playerType = pt;
 
 	ctrlShot = true;
 
@@ -47,8 +60,15 @@ Player::~Player()
 	delete spriteR;
 	delete spriteU;
 	delete spriteD;
+	delete letterP;
 	delete bulletHoriImg;
 	delete bulletVerImg;
+	delete playerTypeSprite;
+
+	for (int i = 0; i < life; i++)
+	{
+		delete lifeChain[i];
+	}
 }
 
 // ---------------------------------------------------------------------------------
@@ -64,7 +84,7 @@ void Player::Stop()
 void Player::Up()
 {
 	velX = 0;
-	velY = -250.0f;
+	velY = -200.0f;
 }
 
 // ---------------------------------------------------------------------------------
@@ -72,14 +92,14 @@ void Player::Up()
 void Player::Down()
 {
 	velX = 0;
-	velY = 250.0f;
+	velY = 200.0f;
 }
 
 // ---------------------------------------------------------------------------------
 
 void Player::Left()
 {
-	velX = -250.0f;
+	velX = -200.0f;
 	velY = 0;
 }
 
@@ -87,7 +107,7 @@ void Player::Left()
 
 void Player::Right()
 {
-	velX = 250.0f;
+	velX = 200.0f;
 	velY = 0;
 }
 
@@ -118,6 +138,17 @@ void Player::OnCollision(Object* obj)
 			break;
 		}
 		currState = STOPED;
+	}
+	if (obj->Type() == PROJECTILE)
+	{
+		Projectile* projectile = (Projectile*)obj;
+		if (projectile->PlayerInfo() != this)
+			life--;
+
+		if (life <= 0)
+		{
+			GameManager::endGame = true;
+		}
 	}
 	if (obj->Type() == PIVOT)
 		PivotCollision(obj);
@@ -524,6 +555,30 @@ void Player::Draw()
 		case UP:    spriteU->Draw(x, y, Layer::UPPER); break;
 		case DOWN:  spriteD->Draw(x, y, Layer::UPPER); break;
 		default:    spriteL->Draw(x, y, Layer::UPPER);
+		}
+	}
+
+	int heartX = 90.0f;
+	if (playerType == PLAYER1)
+	{
+		letterP->Draw(30.0f, window->Height() - 18.0f);
+		playerTypeSprite->Draw(53.0f, window->Height() - 15.0f);
+
+		for (int i = 0; i < life; i++)
+		{
+			lifeChain[i]->Draw(heartX, window->Height() - 15.0f);
+			heartX += 40.0f;
+		}
+	}
+	else
+	{
+		heartX = window->Width() - 120;
+		letterP->Draw(window->Width() - 183, window->Height() - 18.0f);
+		playerTypeSprite->Draw(window->Width() - 160, window->Height() - 15.0f);
+		for (int i = 0; i < life; i++)
+		{
+			lifeChain[i]->Draw(heartX, window->Height() - 15.0f);
+			heartX += 40.0f;
 		}
 	}
 }

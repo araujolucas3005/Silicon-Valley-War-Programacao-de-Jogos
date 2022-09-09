@@ -22,6 +22,8 @@
 #include "Scene.h"
 #include "Timer.h"
 #include "string"
+#include <vector>
+using namespace std;
 
 // ---------------------------------------------------------------------------------
 // Constantes Globais
@@ -29,6 +31,7 @@
 // estados possíveis para o jogador
 
 enum PLAYERSTATE { STOPED, UP, DOWN, LEFT, RIGHT };
+enum PLAYERTYPE { PLAYER1, PLAYER2 };
 
 struct MovementKeys {
 	int up;
@@ -47,8 +50,15 @@ private:
 	Sprite* spriteR = nullptr;         // sprite do player indo para direita
 	Sprite* spriteU = nullptr;         // sprite do player indo para cima
 	Sprite* spriteD = nullptr;         // sprite do player indo para baixo
+	Sprite* playerTypeSprite = nullptr;// sprite para identificar o jogador 1 ou 2
+	Sprite* letterP = nullptr;
+	vector<Sprite*> lifeChain;
+	Image* heart = nullptr;				// sprite do coracao
+	PLAYERTYPE playerType;
+
 	float velX = 0;                     // velocidade horizontal do player
 	float velY = 0;                     // velocidade vertical do player
+	int life = 3;					// vida do jogador
 
 	Image* bulletVerImg = nullptr;
 	Image* bulletHoriImg = nullptr;
@@ -65,7 +75,7 @@ public:
 	float prevX;
 	float prevY;
 
-	Player(MovementKeys movementKeys);
+	Player(MovementKeys movementKeys, PLAYERTYPE pt);
 	~Player();                          // destrutor
 
 	void Stop();                        // pára jogador

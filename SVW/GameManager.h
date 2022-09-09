@@ -7,6 +7,7 @@ class GameManager
 {
 public:
 	static Level* currLevel;
+	static bool endGame;
 };
 
 #endif
