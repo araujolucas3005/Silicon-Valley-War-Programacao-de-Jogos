@@ -1,16 +1,16 @@
 /**********************************************************************************
-// Ghost (Arquivo de Cabeçalho)
-// 
-// Criação:     01 Jan 2013
+// Food (Arquivo de Cabeçalho)
+//
+// Criação:     03 Jan 2013
 // Atualização: 25 Ago 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Fantasmas do PacMan
+// Descrição:   Tiro do SVW
 //
 **********************************************************************************/
 
-#ifndef _PACMAN_GHOST_H_
-#define _PACMAN_GHOST_H_
+#ifndef _SVW_PROJECTILE_H_
+#define _SVW_PROJECTILE_H_
 
 // ---------------------------------------------------------------------------------
 // Inclusões
@@ -18,31 +18,36 @@
 #include "Types.h"                      // tipos específicos da engine
 #include "Object.h"                     // interface de Object
 #include "Sprite.h"                     // interface de Sprites
-#include "Player.h"                     // jogador do PacMan
+#include "Player.h"                     // jogador do SVW
 
 // ---------------------------------------------------------------------------------
 
-class Ghost : public Object
+class Projectile : public Object
 {
 private:
-    Sprite * sprite = nullptr;          // sprite do player
-    Player * player = nullptr;          // ponteiro para jogador
+	Sprite* sprite = nullptr;          // sprite da comida
+	Player* player = nullptr;
+	Image* image = nullptr;
+
+	float velX;
+	float velY;
 
 public:
-    float velX = 0;                     // velocidade horizontal
-    float velY = 0;                     // velocidade vertical
+	Projectile(Player* player, float velX, float velY, Image * image);
+	~Projectile();
 
-    Ghost(Player * p);                  // construtor
-    ~Ghost();                           // destrutor
+	void OnCollision(Object* obj);     // resolução da colisão
 
-    void Update();                      // atualização do objeto
-    void Draw();                        // desenho do objeto
+	void Update();
+	void Draw();
 };
 
 // ---------------------------------------------------------------------------------
 
-inline void Ghost::Draw()
-{ sprite->Draw(x, y, z); }
+inline void Projectile::Draw()
+{
+	sprite->Draw(x, y, z);
+}
 
 // ---------------------------------------------------------------------------------
 

@@ -30,8 +30,9 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{E790FA02-70B4-455F-8174-253F45651C7F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>PacMan</RootNamespace>
+    <RootNamespace>SVW</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>SVW</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -248,7 +249,7 @@
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="Level2.cpp" />
     <ClCompile Include="Object.cpp" />
-    <ClCompile Include="PacMan.cpp" />
+    <ClCompile Include="SVW.cpp" />
     <ClCompile Include="Pivot.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Renderer.cpp" />
@@ -272,7 +273,7 @@
     <ClInclude Include="Level1.h" />
     <ClInclude Include="Level2.h" />
     <ClInclude Include="Object.h" />
-    <ClInclude Include="PacMan.h" />
+    <ClInclude Include="SVW.h" />
     <ClInclude Include="Pivot.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h">

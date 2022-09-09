@@ -1,17 +1,16 @@
 /**********************************************************************************
-// Level1 (Código Fonte) 
+// Level2 (Código Fonte) 
 // 
 // Criação:     18 Jan 2013
 // Atualização: 25 Ago 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Nível 1 do jogo PacMan
+// Descrição:   Nível 2 do jogo SVW
 //
 **********************************************************************************/
 
 #include "Engine.h"
 #include "Home.h"
-#include "Level1.h"
 #include "Level2.h"
 #include "Player.h"
 #include "Pivot.h"
@@ -23,7 +22,7 @@ using std::string;
 
 // ------------------------------------------------------------------------------
 
-void Level1::Init()
+void Level2::Init()
 {
     GameManager::currLevel = this;
 
@@ -31,13 +30,13 @@ void Level1::Init()
     scene = new Scene();
 
     // cria background
-    backg = new Sprite("Resources/Level1.jpg");
+    backg = new Sprite("Resources/Level2.jpg");
 
-    Player1* playerOne = new Player1({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 });
+    Player* playerOne = new Player({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 });
     playerOne->MoveTo(600.0f, 450.0f);
     scene->Add(playerOne, MOVING);
 
-    Player2* playerTwo = new Player2({ 'W', 'A', 'S', 'D', 'K' });
+    Player* playerTwo = new Player({ 'W', 'A', 'S', 'D', 'K' });
     playerTwo->MoveTo(400.0f, 450.0f);
     scene->Add(playerTwo, MOVING);
 
@@ -45,10 +44,10 @@ void Level1::Init()
     Pivot * pivot;
     bool left, right, up, down;
     float posX, posY;
+    ifstream fin;
 
     // cria pivôs a partir do arquivo
-    ifstream fin;
-    fin.open("PivotsL1.txt");
+    fin.open("PivotsL2.txt");
     fin >> left;
     while (!fin.eof())
     {
@@ -74,7 +73,7 @@ void Level1::Init()
 
 // ------------------------------------------------------------------------------
 
-void Level1::Finalize()
+void Level2::Finalize()
 {
     delete backg;
     delete scene;
@@ -82,7 +81,7 @@ void Level1::Finalize()
 
 // ------------------------------------------------------------------------------
 
-void Level1::Update()
+void Level2::Update()
 {
     // habilita/desabilita bounding box
     if (ctrlKeyB && window->KeyDown('B'))
@@ -94,16 +93,11 @@ void Level1::Update()
     {
         ctrlKeyB = true;
     }
-    
+
     if (window->KeyDown(VK_ESCAPE))
     {
         // volta para a tela de abertura
         Engine::Next<Home>();
-    }
-    else if (window->KeyDown('N'))
-    {
-        // passa manualmente para o próximo nível
-        Engine::Next<Level2>();
     }
     else
     {
@@ -115,7 +109,7 @@ void Level1::Update()
 
 // ------------------------------------------------------------------------------
 
-void Level1::Draw()
+void Level2::Draw()
 {
     // desenha cena
     backg->Draw(float(window->CenterX()), float(window->CenterY()), Layer::BACK);

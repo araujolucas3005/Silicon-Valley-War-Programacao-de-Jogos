@@ -1,35 +1,36 @@
 /**********************************************************************************
-// Pivot (Código Fonte)
+// Food (Código Fonte)
 // 
-// Criação:     01 Jan 2013
+// Criação:     03 Jan 2013
 // Atualização: 25 Ago 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Ponto de mudança de direção para o jogador e fantasmas
+// Descrição:   Comida do SVW
 //
 **********************************************************************************/
 
-#include "PacMan.h"
-#include "Pivot.h"
+#include "SVW.h"
+#include "Food.h"
 
 // ---------------------------------------------------------------------------------
 
-Pivot::Pivot(bool l, bool r, bool u, bool d)
+Food::Food()
 {
-    left  = l;
-    right = r;
-    up    = u;
-    down  = d;
-
-    BBox(new Rect(-4, -4, 4, 4));
-    type = PIVOT;
+    type = FOOD;
 }
 
 // ---------------------------------------------------------------------------------
 
-Pivot::~Pivot()
+Food::~Food()
 {
+
 }
 
 // ---------------------------------------------------------------------------------
 
+void Food::Update()
+{
+
+}
+
+// ---------------------------------------------------------------------------------

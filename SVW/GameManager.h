@@ -1,5 +1,5 @@
-#ifndef _PACMAN_CURRLEVEL_H_
-#define _PACMAN_CURRLEVEL_H_
+#ifndef _SVW_CURRLEVEL_H_
+#define _SVW_CURRLEVEL_H_
 
 #include "Level.h"
 

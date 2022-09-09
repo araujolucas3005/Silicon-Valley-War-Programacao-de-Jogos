@@ -5,12 +5,12 @@
 // Atualização: 25 Ago 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Comida do PacMan
+// Descrição:   Comida do SVW
 //
 **********************************************************************************/
 
-#ifndef _PACMAN_FOOD_H_
-#define _PACMAN_FOOD_H_
+#ifndef _SVW_FOOD_H_
+#define _SVW_FOOD_H_
 
 // ---------------------------------------------------------------------------------
 // Inclusões

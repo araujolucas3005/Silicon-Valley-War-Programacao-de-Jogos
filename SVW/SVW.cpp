@@ -1,5 +1,5 @@
 /**********************************************************************************
-// PacMan (Código Fonte)
+// SVW (Código Fonte)
 // 
 // Criação:     01 Jan 2013
 // Atualização: 25 Ago 2021
@@ -25,7 +25,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance,
     engine->window->Mode(WINDOWED);
     engine->window->Size(960, 720);
     engine->window->Color(25, 25, 25);
-    engine->window->Title("PacMan");
+    engine->window->Title("SVW");
     engine->window->Icon(IDI_ICON);
 
     // configura dispositivo gráfico

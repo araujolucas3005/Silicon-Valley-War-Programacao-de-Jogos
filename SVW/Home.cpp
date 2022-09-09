@@ -5,7 +5,7 @@
 // Atualização: 25 Ago 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Tela de abertura do jogo PacMan
+// Descrição:   Tela de abertura do jogo SVW
 //
 **********************************************************************************/
 

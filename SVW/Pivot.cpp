@@ -1,37 +1,35 @@
 /**********************************************************************************
-// Ghost (Código Fonte)
+// Pivot (Código Fonte)
 // 
 // Criação:     01 Jan 2013
 // Atualização: 25 Ago 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Fantasmas do PacMan
+// Descrição:   Ponto de mudança de direção para o jogador e fantasmas
 //
 **********************************************************************************/
 
-#include "PacMan.h"
-#include "Player.h"
-#include "Ghost.h"
+#include "SVW.h"
+#include "Pivot.h"
 
 // ---------------------------------------------------------------------------------
 
-Ghost::Ghost(Player * p)
+Pivot::Pivot(bool l, bool r, bool u, bool d)
 {
-    type = GHOST;
+    left  = l;
+    right = r;
+    up    = u;
+    down  = d;
+
+    BBox(new Rect(-4, -4, 4, 4));
+    type = PIVOT;
 }
 
 // ---------------------------------------------------------------------------------
 
-Ghost::~Ghost()
+Pivot::~Pivot()
 {
-
 }
 
 // ---------------------------------------------------------------------------------
 
-void Ghost::Update()
-{
-
-}
-
-// ---------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 /**********************************************************************************
-// PacMan (Arquivo de Cabeçalho)
+// SVW (Arquivo de Cabeçalho)
 //
 // Criação:     01 Jan 2013
 // Atualização: 25 Ago 2021
@@ -9,15 +9,14 @@
 //
 **********************************************************************************/
 
-#ifndef _PACMAN_H_
-#define _PACMAN_H_
+#ifndef _SVW_H_
+#define _SVW_H_
 
 // ------------------------------------------------------------------------------
 
-enum PacManObjects
+enum SVWObjects
 {
-    PLAYER1,
-    PLAYER2,
+    PLAYER,
     GHOST,
     FOOD,
     SPECIAL,

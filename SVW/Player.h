@@ -5,12 +5,12 @@
 // Atualização: 25 Ago 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Player do jogo PacMan
+// Descrição:   Player do jogo SVW
 //
 **********************************************************************************/
 
-#ifndef _PACMAN_PLAYER_H_
-#define _PACMAN_PLAYER_H_
+#ifndef _SVW_PLAYER_H_
+#define _SVW_PLAYER_H_
 
 // ---------------------------------------------------------------------------------
 // Inclusões
@@ -65,7 +65,7 @@ public:
 	float prevX;
 	float prevY;
 
-	Player(MovementKeys movementKeys, int type);
+	Player(MovementKeys movementKeys);
 	~Player();                          // destrutor
 
 	void Stop();                        // pára jogador
@@ -79,28 +79,6 @@ public:
 
 	void Update();                      // atualização do objeto
 	void Draw();                        // desenho do objeto
-};
-
-// ---------------------------------------------------------------------------------
-
-class Player1 : public Player
-{
-public:
-	Player1(MovementKeys movementKeys);
-	~Player1();                         // destrutor
-
-	void OnCollision(Object* obj);     // resolução da colisão
-};
-
-// ---------------------------------------------------------------------------------
-
-class Player2 : public Player
-{
-public:
-	Player2(MovementKeys movementKeys);
-	~Player2();                         // destrutor
-
-	void OnCollision(Object* obj);     // resolução da colisão
 };
 
 #endif

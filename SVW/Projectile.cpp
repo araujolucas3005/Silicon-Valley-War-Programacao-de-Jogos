@@ -5,11 +5,11 @@
 // Atualização: 25 Ago 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Comida do PacMan
+// Descrição:   Comida do SVW
 //
 **********************************************************************************/
 
-#include "PacMan.h"
+#include "SVW.h"
 #include "Projectile.h"
 #include "Player.h"
 #include "GameManager.h"
@@ -36,7 +36,7 @@ Projectile::~Projectile()
 }
 
 void Projectile::OnCollision(Object* obj) {
-	if ((obj->Type() == PLAYER1 || obj->Type() == PLAYER2) && player != obj) {
+	if (obj->Type() == PLAYER && player != obj) {
 		GameManager::currLevel->scene->Delete(this, PROJECTILE);
 	}
 }

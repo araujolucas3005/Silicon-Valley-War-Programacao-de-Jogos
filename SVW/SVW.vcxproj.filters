@@ -45,7 +45,7 @@
     <ClCompile Include="Level2.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="PacMan.cpp">
+    <ClCompile Include="SVW.cpp">
       <Filter>Game\Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="Pivot.cpp">
@@ -131,7 +131,7 @@
     <ClInclude Include="Level2.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="PacMan.h">
+    <ClInclude Include="SVW.h">
       <Filter>Game\Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">

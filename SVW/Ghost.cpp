@@ -1,34 +1,35 @@
 /**********************************************************************************
-// Food (Código Fonte)
+// Ghost (Código Fonte)
 // 
-// Criação:     03 Jan 2013
+// Criação:     01 Jan 2013
 // Atualização: 25 Ago 2021
 // Compilador:  Visual C++ 2019
 //
-// Descrição:   Comida do PacMan
+// Descrição:   Fantasmas do SVW
 //
 **********************************************************************************/
 
-#include "PacMan.h"
-#include "Food.h"
+#include "SVW.h"
+#include "Player.h"
+#include "Ghost.h"
 
 // ---------------------------------------------------------------------------------
 
-Food::Food()
+Ghost::Ghost(Player * p)
 {
-    type = FOOD;
+    type = GHOST;
 }
 
 // ---------------------------------------------------------------------------------
 
-Food::~Food()
+Ghost::~Ghost()
 {
 
 }
 
 // ---------------------------------------------------------------------------------
 
-void Food::Update()
+void Ghost::Update()
 {
 
 }

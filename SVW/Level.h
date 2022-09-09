@@ -1,5 +1,5 @@
-#ifndef _PACMAN_LEVEL_H_
-#define _PACMAN_LEVEL_H_
+#ifndef _SVW_LEVEL_H_
+#define _SVW_LEVEL_H_
 
 #include "Scene.h"
 
