@@ -9,9 +9,9 @@
 *.user
 *.userosscache
 *.sln.docstates
-SVW/.DS_Store
+./SVW/.DS_Store
 .DS_Store
-SVW/Shaders/
+./SVW/Shaders/
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
