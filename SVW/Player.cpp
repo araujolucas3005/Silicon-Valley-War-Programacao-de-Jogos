@@ -117,7 +117,7 @@ void Player::OnCollision(Object* obj)
 		default:
 			break;
 		}
-		currState = STOPED;
+		currState = nextState = STOPED;
 	}
 	if (obj->Type() == PIVOT)
 		PivotCollision(obj);
@@ -406,6 +406,9 @@ void Player::PivotCollision(Object* obj)
 
 void Player::Update()
 {
+	prevX = x;
+	prevY = y;
+
 	if (window->KeyDown(movementKeys.left))
 	{
 		nextState = LEFT;

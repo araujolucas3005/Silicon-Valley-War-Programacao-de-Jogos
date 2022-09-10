@@ -39,6 +39,12 @@ void Projectile::OnCollision(Object* obj) {
 	if (obj->Type() == PLAYER && player != obj) {
 		GameManager::currLevel->scene->Delete(this, PROJECTILE);
 	}
+
+	OutputDebugString(std::to_string(obj->Type()).c_str());
+
+	if (obj->Type() == WALL) {
+		GameManager::currLevel->scene->Delete(this, PROJECTILE);
+	}
 }
 
 // ---------------------------------------------------------------------------------
