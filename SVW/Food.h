@@ -21,14 +21,17 @@
 
 // ---------------------------------------------------------------------------------
 
+enum FOODTYPE { MONEY, IDEA };
+
 class Food : public Object
 {
 private:
     Sprite * sprite = nullptr;          // sprite da comida
 
 public:
-    Food();                             // construtor
+    Food(FOODTYPE, float, float);       // construtor
     ~Food();                            // destrutor
+    FOODTYPE foodType;
 
     void Update();                      // atualização do objeto
     void Draw();                        // desenho do objeto

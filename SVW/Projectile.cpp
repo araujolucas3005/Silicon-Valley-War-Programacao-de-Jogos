@@ -37,7 +37,7 @@ Projectile::~Projectile()
 
 void Projectile::OnCollision(Object* obj) {
 	if (obj->Type() == PLAYER && player != obj) {
-		GameManager::currLevel->scene->Delete(this, PROJECTILE);
+		GameManager::currLevel->scene->Delete(this, MOVING);
 	}
 }
 

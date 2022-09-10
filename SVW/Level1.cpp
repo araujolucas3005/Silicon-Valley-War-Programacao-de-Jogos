@@ -14,11 +14,18 @@
 #include "Level1.h"
 #include "Player.h"
 #include "Pivot.h"
+#include "Food.h"
 #include "GameManager.h"
 #include <string>
 #include <fstream>
+#include <random>
 using std::ifstream;
 using std::string;
+
+// ------------------------------------------------------------------------------
+
+std::random_device dev;
+std::mt19937 rng(dev());
 
 // ------------------------------------------------------------------------------
 
@@ -57,6 +64,7 @@ void Level1::Init()
             fin >> right; fin >> up; fin >> down; fin >> posX; fin >> posY;
             pivot = new Pivot(left, right, up, down);
             pivot->MoveTo(posX, posY);
+            GameManager::PivotPositions.push_back({ posX, posY });
             scene->Add(pivot, STATIC);
         }
         else
@@ -69,12 +77,16 @@ void Level1::Init()
         fin >> left;
     }
     fin.close();
+
+    foodTime = new Timer();
+    foodTime->Start();
 }
 
 // ------------------------------------------------------------------------------
 
 void Level1::Finalize()
 {
+    delete foodTime;
     delete backg;
     delete scene;
 }
@@ -102,6 +114,17 @@ void Level1::Update()
     }
     else
     {
+        // Adiciona comidas aleatorias na cena se o tempo se passou e se nao atingiu o limite de comidas
+        if (foodTime->Elapsed() > 30 && (GameManager::foodNow < GameManager::foodLimit))
+        {
+            std::uniform_int_distribution<std::mt19937::result_type> randomFt(0, 1);
+            std::uniform_int_distribution<std::mt19937::result_type> randomPos(0, GameManager::PivotPositions.size() - 1);
+            foodTime->Start();
+            pair<float, float> foodPos = GameManager::PivotPositions[randomPos(rng)];
+            scene->Add(new Food((FOODTYPE) randomFt(rng), foodPos.first, foodPos.second), STATIC);
+            GameManager::foodNow++;
+        }
+
         // atualiza cena
         scene->Update();
         scene->CollisionDetection();

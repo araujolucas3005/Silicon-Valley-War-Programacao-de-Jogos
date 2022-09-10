@@ -12,6 +12,7 @@
 #include "SVW.h"
 #include "Player.h"
 #include "Pivot.h"
+#include "Food.h"
 #include "Projectile.h"
 #include "GameManager.h"
 
@@ -40,6 +41,10 @@ Player::Player(MovementKeys movementKeys, PLAYERTYPE pt)
 
 	bulletHoriImg = new Image("Resources/BulletHori.png");
 	bulletVerImg = new Image("Resources/BulletVer.png");
+	specialPowerUp = new Image("Resources/specialPowerUp.png");
+	specialPowerLeft = new Image("Resources/specialPowerLeft.png");
+	specialPowerRight = new Image("Resources/specialPowerRight.png");
+	specialPowerDown = new Image("Resources/specialPowerDown.png");
 
 	// imagem do pacman é 48x48 (com borda transparente de 4 pixels)
 	BBox(new Rect(-20, -20, 20, 20));
@@ -49,6 +54,7 @@ Player::Player(MovementKeys movementKeys, PLAYERTYPE pt)
 	ctrlShot = true;
 
 	timer = new Timer();
+	specialPowerTimer = new Timer();
 	timer->Start();
 }
 
@@ -143,12 +149,30 @@ void Player::OnCollision(Object* obj)
 	{
 		Projectile* projectile = (Projectile*)obj;
 		if (projectile->PlayerInfo() != this)
-			life--;
+			if (projectile->PlayerInfo()->specialPower)
+				life -= 2;
+			else
+				life--;
 
 		if (life <= 0)
 		{
 			GameManager::endGame = true;
 		}
+	}
+	if (obj->Type() == FOOD)
+	{
+		Food* fd = (Food*)obj;
+
+		if (fd->foodType == MONEY && life < 3)
+			life++;
+		else
+		{
+			specialPower = true;
+			specialPowerTimer->Start();
+		}
+
+		GameManager::currLevel->scene->Delete(fd, STATIC);
+		GameManager::foodNow--;
 	}
 	if (obj->Type() == PIVOT)
 		PivotCollision(obj);
@@ -495,10 +519,10 @@ void Player::Update()
 		Image* bulletImg = nullptr;
 
 		switch (currState) {
-			case UP: pVelX = 0; pVelY = -250.0f; pX = X(); pY = Y() - 15; bulletImg = bulletVerImg; break;
-			case LEFT: pVelX = -250.0f; pVelY = 0;  pX = X() - 15; pY = Y(); bulletImg = bulletHoriImg;  break;
-			case DOWN: pVelX = 0; pVelY = 250.0f;  pX = X(); pY = Y() + 15; bulletImg = bulletVerImg;  break;
-			case RIGHT: pVelX = 250.0f; pVelY = 0;  pX = X() + 15; pY = Y(); bulletImg = bulletHoriImg; break;
+			case UP: pVelX = 0; pVelY = -250.0f; pX = X(); pY = Y() - 15; bulletImg = specialPower ? specialPowerUp : bulletVerImg; break;
+			case LEFT: pVelX = -250.0f; pVelY = 0;  pX = X() - 15; pY = Y(); bulletImg = specialPower ? specialPowerLeft : bulletHoriImg;  break;
+			case DOWN: pVelX = 0; pVelY = 250.0f;  pX = X(); pY = Y() + 15; bulletImg = specialPower ? specialPowerDown : bulletVerImg;  break;
+			case RIGHT: pVelX = 250.0f; pVelY = 0;  pX = X() + 15; pY = Y(); bulletImg = specialPower ? specialPowerRight : bulletHoriImg; break;
 		}
 
 		if (bulletImg) {
@@ -520,6 +544,14 @@ void Player::Update()
 		ctrlShot = true;
 	}
 
+	if (specialPower)
+	{
+		if (specialPowerTimer->Elapsed() >= 8)
+		{
+			specialPower = false;
+		}
+	}
+	
 	// atualiza posição
 	Translate(velX * gameTime, velY * gameTime);
 
@@ -558,7 +590,7 @@ void Player::Draw()
 		}
 	}
 
-	int heartX = 90.0f;
+	float heartX = 90.0f;
 	if (playerType == PLAYER1)
 	{
 		letterP->Draw(30.0f, window->Height() - 18.0f);
@@ -572,9 +604,9 @@ void Player::Draw()
 	}
 	else
 	{
-		heartX = window->Width() - 120;
-		letterP->Draw(window->Width() - 183, window->Height() - 18.0f);
-		playerTypeSprite->Draw(window->Width() - 160, window->Height() - 15.0f);
+		heartX = window->Width() - 184.0f;
+		letterP->Draw(window->Width() - 247.0f, window->Height() - 18.0f);
+		playerTypeSprite->Draw(window->Width() - 224.0f, window->Height() - 15.0f);
 		for (int i = 0; i < life; i++)
 		{
 			lifeChain[i]->Draw(heartX, window->Height() - 15.0f);

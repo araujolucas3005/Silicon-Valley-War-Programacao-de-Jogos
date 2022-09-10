@@ -58,12 +58,18 @@ private:
 
 	float velX = 0;                     // velocidade horizontal do player
 	float velY = 0;                     // velocidade vertical do player
-	int life = 3;					// vida do jogador
+	int life = 5;					// vida do jogador
 
 	Image* bulletVerImg = nullptr;
 	Image* bulletHoriImg = nullptr;
 
+	Image* specialPowerUp = nullptr;
+	Image* specialPowerLeft = nullptr;
+	Image* specialPowerRight = nullptr;
+	Image* specialPowerDown = nullptr;
+
 	Timer* timer = nullptr;
+	Timer* specialPowerTimer = nullptr;
 
 	boolean ctrlShot;
 
@@ -72,6 +78,7 @@ private:
 public:
 	uint currState = STOPED;            // estado atual do jogador
 	uint nextState = STOPED;            // próximo estado do jogador
+	bool specialPower = false;
 	float prevX;
 	float prevY;
 

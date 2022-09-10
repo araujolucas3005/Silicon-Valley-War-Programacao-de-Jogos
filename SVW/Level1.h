@@ -27,6 +27,7 @@ private:
     Sprite * backg = nullptr;       // background
     bool viewBBox = false;          // habilita visualização da bounding box
     bool ctrlKeyB = false;          // controle da tecla B
+    Timer* foodTime = nullptr;      // controla o tempo para aparecer comidas
 
 public:
     void Init();                    // inicializa jogo
