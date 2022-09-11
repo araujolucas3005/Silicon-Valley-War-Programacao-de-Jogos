@@ -15,25 +15,33 @@
 #include "Food.h"
 #include "Projectile.h"
 #include "GameManager.h"
+#include "Wall.h"
 
 // ---------------------------------------------------------------------------------
 
-Player::Player(MovementKeys movementKeys, PLAYERTYPE pt)
+Player::Player(MovementKeys movementKeys, PLAYERTYPE pt, int playerCount)
 {
 	this->movementKeys = movementKeys;
 
-	spriteL = new Sprite("Resources/PacManL.png");
-	spriteR = new Sprite("Resources/PacManR.png");
-	spriteU = new Sprite("Resources/PacManU.png");
-	spriteD = new Sprite("Resources/PacManD.png");
+	spriteL = new Sprite(GameManager::playerImages[playerCount] + "L.png");
+	spriteR = new Sprite(GameManager::playerImages[playerCount] + "R.png");
+	spriteU = new Sprite(GameManager::playerImages[playerCount] + "U.png");
+	spriteD = new Sprite(GameManager::playerImages[playerCount] + "D.png");
+	currSprite = spriteU;
+
 	letterP = new Sprite("Resources/letterP.png");
 	heart = new Image("Resources/heart.png");
 
 	if (pt == PLAYER1)
+	{
 		playerTypeSprite = new Sprite("Resources/number1.png");
+	}
 	else
+	{
 		playerTypeSprite = new Sprite("Resources/number2.png");
-	
+	}
+
+
 	for (int i = 0; i < life; i++)
 	{
 		lifeChain.push_back(new Sprite(heart));
@@ -123,10 +131,13 @@ void Player::OnCollision(Object* obj)
 {
 	if (obj->Type() == PLAYER)
 	{
-		Stop();
 		Player* player = (Player*)obj;
 
-		switch (currState)
+		MoveTo(prevX, prevY);
+
+		Stop();
+
+		/*switch (currState)
 		{
 		case UP:
 			MoveTo(x, player->Y() + 42);
@@ -143,7 +154,7 @@ void Player::OnCollision(Object* obj)
 		default:
 			break;
 		}
-		currState = STOPED;
+		currState = nextState = STOPED;*/
 	}
 	if (obj->Type() == PROJECTILE)
 	{
@@ -174,8 +185,23 @@ void Player::OnCollision(Object* obj)
 		GameManager::currLevel->scene->Delete(fd, STATIC);
 		GameManager::foodNow--;
 	}
-	if (obj->Type() == PIVOT)
-		PivotCollision(obj);
+
+	//if (obj->Type() == PIVOT && !canWalkFreely) {
+	//	PivotCollision(obj);
+	//}
+
+	if (obj->Type() == WALL) {
+		Wall* wall = (Wall*)obj;
+
+		Stop();
+
+		switch (currState) {
+		case UP: MoveTo(x, prevY + 1); break;
+		case DOWN: MoveTo(x, prevY - 1); break;
+		case LEFT: MoveTo(prevX + 1, prevY); break;
+		case RIGHT: MoveTo(prevX - 1, prevY); break;
+		}
+	}
 }
 
 // ---------------------------------------------------------------------------------
@@ -461,48 +487,63 @@ void Player::PivotCollision(Object* obj)
 
 void Player::Update()
 {
+	prevX = x;
+	prevY = y;
+
 	if (window->KeyDown(movementKeys.left))
 	{
-		nextState = LEFT;
+		/*nextState = LEFT;
 
-		if (currState == RIGHT || currState == STOPED)
+		if (currState == RIGHT || currState == STOPED || canWalkFreely)
 		{
 			currState = LEFT;
 			Left();
-		}
+		}*/
+
+		currState = LEFT;
+		Left();
 	}
 
 	if (window->KeyDown(movementKeys.right))
 	{
-		nextState = RIGHT;
+		/*nextState = RIGHT;
 
-		if (currState == LEFT || currState == STOPED)
+		if (currState == LEFT || currState == STOPED || canWalkFreely)
 		{
 			currState = RIGHT;
 			Right();
-		}
+		}*/
+
+		currState = RIGHT;
+		Right();
 	}
 
 	if (window->KeyDown(movementKeys.up))
 	{
-		nextState = UP;
+		/*nextState = UP;
 
-		if (currState == DOWN || currState == STOPED)
+		if (currState == DOWN || currState == STOPED || canWalkFreely)
 		{
 			currState = UP;
 			Up();
-		}
+		}*/
+
+		currState = UP;
+		Up();
 	}
 
 	if (window->KeyDown(movementKeys.down))
 	{
-		nextState = DOWN;
+		/*nextState = DOWN;
 
-		if (currState == UP || currState == STOPED)
+		if (currState == UP || currState == STOPED || canWalkFreely)
 		{
 			currState = DOWN;
 			Down();
-		}
+		}*/
+
+		currState = DOWN;
+		Down();
 	}
 
 	if (timer->Elapsed() > 1 && ctrlShot && window->KeyDown(movementKeys.shoot))
@@ -519,10 +560,10 @@ void Player::Update()
 		Image* bulletImg = nullptr;
 
 		switch (currState) {
-			case UP: pVelX = 0; pVelY = -250.0f; pX = X(); pY = Y() - 15; bulletImg = specialPower ? specialPowerUp : bulletVerImg; break;
-			case LEFT: pVelX = -250.0f; pVelY = 0;  pX = X() - 15; pY = Y(); bulletImg = specialPower ? specialPowerLeft : bulletHoriImg;  break;
-			case DOWN: pVelX = 0; pVelY = 250.0f;  pX = X(); pY = Y() + 15; bulletImg = specialPower ? specialPowerDown : bulletVerImg;  break;
-			case RIGHT: pVelX = 250.0f; pVelY = 0;  pX = X() + 15; pY = Y(); bulletImg = specialPower ? specialPowerRight : bulletHoriImg; break;
+		case UP: pVelX = 0; pVelY = -250.0f; pX = X(); pY = Y() - 15; bulletImg = specialPower ? specialPowerUp : bulletVerImg; break;
+		case LEFT: pVelX = -250.0f; pVelY = 0;  pX = X() - 15; pY = Y(); bulletImg = specialPower ? specialPowerLeft : bulletHoriImg;  break;
+		case DOWN: pVelX = 0; pVelY = 250.0f;  pX = X(); pY = Y() + 15; bulletImg = specialPower ? specialPowerDown : bulletVerImg;  break;
+		case RIGHT: pVelX = 250.0f; pVelY = 0;  pX = X() + 15; pY = Y(); bulletImg = specialPower ? specialPowerRight : bulletHoriImg; break;
 		}
 
 		if (bulletImg) {
@@ -551,7 +592,7 @@ void Player::Update()
 			specialPower = false;
 		}
 	}
-	
+
 	// atualiza posição
 	Translate(velX * gameTime, velY * gameTime);
 
@@ -575,20 +616,21 @@ void Player::Draw()
 {
 	switch (currState)
 	{
-	case LEFT:  spriteL->Draw(x, y, Layer::UPPER); break;
-	case RIGHT: spriteR->Draw(x, y, Layer::UPPER); break;
-	case UP:    spriteU->Draw(x, y, Layer::UPPER); break;
-	case DOWN:  spriteD->Draw(x, y, Layer::UPPER); break;
-	default:
-		switch (nextState)
-		{
-		case LEFT:  spriteL->Draw(x, y, Layer::UPPER); break;
-		case RIGHT: spriteR->Draw(x, y, Layer::UPPER); break;
-		case UP:    spriteU->Draw(x, y, Layer::UPPER); break;
-		case DOWN:  spriteD->Draw(x, y, Layer::UPPER); break;
-		default:    spriteL->Draw(x, y, Layer::UPPER);
-		}
+	case LEFT:  currSprite = spriteL; break;
+	case RIGHT: currSprite = spriteR; break;
+	case UP:    currSprite = spriteU; break;
+	case DOWN:  currSprite = spriteD; break;
+		//default:
+		//	switch (nextState)
+		//	{
+		//	case LEFT:  currSprite = spriteL; break;
+		//	case RIGHT: currSprite = spriteR; break;
+		//	case UP:    currSprite = spriteU; break;
+		//	case DOWN:  currSprite = spriteD; break;
+		//	}
 	}
+
+	currSprite->Draw(x, y, Layer::UPPER);
 
 	float heartX = 90.0f;
 	if (playerType == PLAYER1)

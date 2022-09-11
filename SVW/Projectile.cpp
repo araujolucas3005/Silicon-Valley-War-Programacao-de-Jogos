@@ -13,6 +13,7 @@
 #include "Projectile.h"
 #include "Player.h"
 #include "GameManager.h"
+#include "Wall.h"
 
 // ---------------------------------------------------------------------------------
 
@@ -38,6 +39,10 @@ Projectile::~Projectile()
 void Projectile::OnCollision(Object* obj) {
 	if (obj->Type() == PLAYER && player != obj) {
 		GameManager::currLevel->scene->Delete(this, MOVING);
+	} else if (obj->Type() == WALL) {
+		Wall* wall = (Wall*)obj;
+
+		GameManager::currLevel->scene->Delete(this, PROJECTILE);
 	}
 }
 

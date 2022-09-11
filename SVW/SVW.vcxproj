@@ -237,6 +237,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CharSelect.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Food.cpp" />
@@ -256,9 +257,11 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CharSelect.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Food.h" />
@@ -285,6 +288,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="Wall.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -292,6 +296,8 @@
     <Text Include="FoodL2.txt" />
     <Text Include="PivotsL1.txt" />
     <Text Include="PivotsL2.txt" />
+    <Text Include="RangedPivotsL1.txt" />
+    <Text Include="WallsL1.txt" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Pixel.hlsl">

@@ -12,6 +12,7 @@
 #include "Engine.h"
 #include "Home.h"
 #include "Level1.h"
+#include "CharSelect.h"
 
 // ------------------------------------------------------------------------------
 
@@ -43,8 +44,13 @@ void Home::Update()
     }
 
     // passa ao primeiro nível com ENTER
-    if (window->KeyDown(VK_RETURN))
-        Engine::Next<Level1>();
+    if (ctrlKeyEnter && window->KeyDown(VK_RETURN)) {
+        ctrlKeyEnter = false;
+        Engine::Next<CharSelect>();
+    }
+    else if (window->KeyUp(VK_RETURN)) {
+        ctrlKeyEnter = true;
+    }
 }
 
 // ------------------------------------------------------------------------------

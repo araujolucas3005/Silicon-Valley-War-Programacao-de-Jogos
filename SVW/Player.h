@@ -50,6 +50,7 @@ private:
 	Sprite* spriteR = nullptr;         // sprite do player indo para direita
 	Sprite* spriteU = nullptr;         // sprite do player indo para cima
 	Sprite* spriteD = nullptr;         // sprite do player indo para baixo
+	Sprite* currSprite = nullptr;
 	Sprite* playerTypeSprite = nullptr;// sprite para identificar o jogador 1 ou 2
 	Sprite* letterP = nullptr;
 	vector<Sprite*> lifeChain;
@@ -82,7 +83,7 @@ public:
 	float prevX;
 	float prevY;
 
-	Player(MovementKeys movementKeys, PLAYERTYPE pt);
+	Player(MovementKeys movementKeys, PLAYERTYPE pt, int playerCount);
 	~Player();                          // destrutor
 
 	void Stop();                        // pára jogador

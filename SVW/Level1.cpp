@@ -16,6 +16,7 @@
 #include "Pivot.h"
 #include "Food.h"
 #include "GameManager.h"
+#include "Wall.h"
 #include <string>
 #include <fstream>
 #include <random>
@@ -37,14 +38,14 @@ void Level1::Init()
     scene = new Scene();
 
     // cria background
-    backg = new Sprite("Resources/Level1.jpg");
+    backg = new Sprite("Resources/Level1New.jpg");
 
-    Player* playerOne = new Player({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 }, PLAYER1);
-    playerOne->MoveTo(600.0f, 450.0f);
+    Player* playerOne = new Player({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 }, PLAYER1, 0);
+    playerOne->MoveTo(250.0f, 450.0f);
     scene->Add(playerOne, MOVING);
 
-    Player* playerTwo = new Player({ 'W', 'A', 'S', 'D', 'K' }, PLAYER2);
-    playerTwo->MoveTo(400.0f, 450.0f);
+    Player* playerTwo = new Player({ 'W', 'A', 'S', 'D', 'K' }, PLAYER2, 1);
+    playerTwo->MoveTo(705.0f, 450.0f);
     scene->Add(playerTwo, MOVING);
 
     // cria pontos de mudança de direção
@@ -75,6 +76,100 @@ void Level1::Init()
             fin.getline(temp, 80);
         }
         fin >> left;
+    }
+    fin.close();
+
+    //fin.open("RangedPivotsL1.txt");
+    //bool wich;
+    //float end;
+    //fin >> left;
+    //while (!fin.eof())
+    //{
+    //    if (fin.good())
+    //    {
+    //        // lê linha de informações do pivô
+    //        fin >> right; fin >> up; fin >> down; fin >> posX; fin >> posY; fin >> wich; fin >> end;
+
+    //        if (wich) {
+    //            for (float i = posX; i <= end; i += 15.0f) {
+    //                pivot = new Pivot(left, right, up, down);
+    //                pivot->MoveTo(i, posY);
+    //                scene->Add(pivot, STATIC);
+    //            }
+
+    //            posX = window->Width() - posX;
+    //            end = window->Width() - end;
+
+    //            for (float i = posX; i >= end; i -= 15.0f) {
+    //                pivot = new Pivot(left, right, up, down);
+    //                pivot->MoveTo(i, posY);
+    //                scene->Add(pivot, STATIC);
+    //            }
+    //        }
+    //        else {
+    //            for (float i = posY; i <= end; i += 15.0f) {
+    //                pivot = new Pivot(left, right, up, down);
+    //                pivot->MoveTo(posX, i);
+    //                scene->Add(pivot, STATIC);
+    //            }
+
+    //            for (float i = posY; i <= end; i += 15.0f) {
+    //                pivot = new Pivot(left, right, up, down);
+    //                pivot->MoveTo(window->Width() - posX, i);
+    //                scene->Add(pivot, STATIC);
+    //            }
+    //        }
+    //    }
+    //    else
+    //    {
+    //        // ignora comentários
+    //        fin.clear();
+    //        char temp[80];
+    //        fin.getline(temp, 80);
+    //    }
+    //    fin >> left;
+    //}
+    //fin.close();
+
+    Wall* wall;
+    float temp;
+    float x1, y1, x2, y2;
+    float X1, Y1, X2, Y2;
+    fin.open("WallsL1.txt");
+    fin >> x1;
+    while (!fin.eof())
+    {
+        if (fin.good())
+        {
+            // lê linha de informações do pivô
+            fin >> y1; fin >> x2; fin >> y2;;
+
+            X1 = (x1 - x2) / 2.0f;
+            X2 = -X1;
+
+            Y1 = (y1 - y2) / 2.0f;
+            Y2 = -Y1;
+
+            wall = new Wall(X1, Y1, X2, Y2);
+            wall->MoveTo(x1 + X2, y1 + Y2);
+            scene->Add(wall, STATIC);
+
+            temp = x2;
+            x2 = window->Width() - x1;
+            x1 = window->Width() - temp;
+
+            wall = new Wall(X1, Y1, X2, Y2);
+            wall->MoveTo(x1 + X2, y1 + Y2);
+            scene->Add(wall, STATIC);
+        }
+        else
+        {
+            // ignora comentários
+            fin.clear();
+            char temp[80];
+            fin.getline(temp, 80);
+        }
+        fin >> x1;
     }
     fin.close();
 
@@ -115,7 +210,7 @@ void Level1::Update()
     else
     {
         // Adiciona comidas aleatorias na cena se o tempo se passou e se nao atingiu o limite de comidas
-        if (foodTime->Elapsed() > 30 && (GameManager::foodNow < GameManager::foodLimit))
+        if (foodTime->Elapsed() > 5 && (GameManager::foodNow < GameManager::foodLimit))
         {
             std::uniform_int_distribution<std::mt19937::result_type> randomFt(0, 1);
             std::uniform_int_distribution<std::mt19937::result_type> randomPos(0, GameManager::PivotPositions.size() - 1);

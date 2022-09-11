@@ -25,6 +25,7 @@ class Home : public Game
 private:
     Sprite * backg = nullptr;       // pano de fundo
     bool ctrlKeyESC = false;        // controle do ESC
+    bool ctrlKeyEnter = false;
 
 public:
     void Init();                    // inicialização
