@@ -17,15 +17,14 @@
 
 void CharSelect::Init()
 {
-	backg = new Sprite("Resources/TitleScreen.jpg");
+	backg = new Sprite("Resources/selecao-personagem.jpg");
 	border = new Sprite("Resources/Special.png");
 	selectedBorder = new Sprite("Resources/Special.png");
 
-	charSelectImg[0] = "Resources/GhostBlue";
-	charSelectImg[1] = "Resources/GhostRed";
-	charSelectImg[2] = "Resources/GhostPink";
-	charSelectImg[3] = "Resources/GhostOrange";
-	charSelectImg[4] = "Resources/Pacman";
+	charSelectImg[0] = "Resources/microsoft";
+	charSelectImg[1] = "Resources/apple";
+	charSelectImg[2] = "Resources/google";
+	charSelectImg[3] = "Resources/android";
 
 	for (int i = 0; i < charsCount; i++) {
 		charSelectSprite[i] = new Sprite(charSelectImg[i] + ".png");

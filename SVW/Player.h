@@ -56,6 +56,7 @@ private:
 	vector<Sprite*> lifeChain;
 	Image* heart = nullptr;				// sprite do coracao
 	PLAYERTYPE playerType;
+	int playerSpriteID;
 
 	float velX = 0;                     // velocidade horizontal do player
 	float velY = 0;                     // velocidade vertical do player

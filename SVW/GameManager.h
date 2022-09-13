@@ -2,6 +2,7 @@
 #define _SVW_CURRLEVEL_H_
 
 #include "Level.h"
+#include "Player.h"
 #include <string>
 #include <vector>
 using namespace std;
@@ -16,6 +17,8 @@ public:
 	static int foodNow;
 	static const uint maxPlayers = 2;
 	static string playerImages[maxPlayers];
+	static PLAYERTYPE winner;
+	static int winnerSpriteID;
 };
 
 #endif

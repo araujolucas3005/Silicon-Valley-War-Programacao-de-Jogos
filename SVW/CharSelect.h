@@ -20,7 +20,7 @@ private:
 	bool ctrlEnter = false;
 
 	int index;
-	static const int charsCount = 5;
+	static const int charsCount = 4;
 	string charSelectImg[charsCount];
 	Sprite* charSelectSprite[charsCount];
 	Sprite* border = nullptr;

@@ -23,6 +23,8 @@ Player::Player(MovementKeys movementKeys, PLAYERTYPE pt, int playerCount)
 {
 	this->movementKeys = movementKeys;
 
+	playerSpriteID = playerCount;
+
 	spriteL = new Sprite(GameManager::playerImages[playerCount] + "L.png");
 	spriteR = new Sprite(GameManager::playerImages[playerCount] + "R.png");
 	spriteU = new Sprite(GameManager::playerImages[playerCount] + "U.png");
@@ -133,11 +135,9 @@ void Player::OnCollision(Object* obj)
 	{
 		Player* player = (Player*)obj;
 
-		MoveTo(prevX, prevY);
-
 		Stop();
 
-		/*switch (currState)
+		switch (currState)
 		{
 		case UP:
 			MoveTo(x, player->Y() + 42);
@@ -154,7 +154,7 @@ void Player::OnCollision(Object* obj)
 		default:
 			break;
 		}
-		currState = nextState = STOPED;*/
+		currState = nextState = STOPED;
 	}
 	if (obj->Type() == PROJECTILE)
 	{
@@ -167,6 +167,8 @@ void Player::OnCollision(Object* obj)
 
 		if (life <= 0)
 		{
+			GameManager::winner = projectile->PlayerInfo()->playerType;
+			GameManager::winnerSpriteID = playerSpriteID;
 			GameManager::endGame = true;
 		}
 	}
@@ -185,10 +187,9 @@ void Player::OnCollision(Object* obj)
 		GameManager::currLevel->scene->Delete(fd, STATIC);
 		GameManager::foodNow--;
 	}
-
-	//if (obj->Type() == PIVOT && !canWalkFreely) {
-	//	PivotCollision(obj);
-	//}
+	if (obj->Type() == PIVOT) {
+		PivotCollision(obj);
+	}
 
 	if (obj->Type() == WALL) {
 		Wall* wall = (Wall*)obj;
@@ -492,58 +493,46 @@ void Player::Update()
 
 	if (window->KeyDown(movementKeys.left))
 	{
-		/*nextState = LEFT;
+		nextState = LEFT;
 
-		if (currState == RIGHT || currState == STOPED || canWalkFreely)
+		if (currState == RIGHT || currState == STOPED)
 		{
 			currState = LEFT;
 			Left();
-		}*/
-
-		currState = LEFT;
-		Left();
+		}
 	}
 
 	if (window->KeyDown(movementKeys.right))
 	{
-		/*nextState = RIGHT;
+		nextState = RIGHT;
 
-		if (currState == LEFT || currState == STOPED || canWalkFreely)
+		if (currState == LEFT || currState == STOPED)
 		{
 			currState = RIGHT;
 			Right();
-		}*/
-
-		currState = RIGHT;
-		Right();
+		}
 	}
 
 	if (window->KeyDown(movementKeys.up))
 	{
-		/*nextState = UP;
+		nextState = UP;
 
-		if (currState == DOWN || currState == STOPED || canWalkFreely)
+		if (currState == DOWN || currState == STOPED)
 		{
 			currState = UP;
 			Up();
-		}*/
-
-		currState = UP;
-		Up();
+		}
 	}
 
 	if (window->KeyDown(movementKeys.down))
 	{
-		/*nextState = DOWN;
+		nextState = DOWN;
 
-		if (currState == UP || currState == STOPED || canWalkFreely)
+		if (currState == UP || currState == STOPED)
 		{
 			currState = DOWN;
 			Down();
-		}*/
-
-		currState = DOWN;
-		Down();
+		}
 	}
 
 	if (timer->Elapsed() > 1 && ctrlShot && window->KeyDown(movementKeys.shoot))

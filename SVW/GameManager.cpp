@@ -6,3 +6,5 @@ vector<pair<float, float>> GameManager::PivotPositions = {};
 int GameManager::foodLimit = 5;
 int GameManager::foodNow = 0;
 string GameManager::playerImages[] = { "" };
+PLAYERTYPE GameManager::winner = PLAYER1;
+int GameManager::winnerSpriteID = 0;

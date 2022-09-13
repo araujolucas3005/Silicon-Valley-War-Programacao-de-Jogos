@@ -20,6 +20,7 @@
 #include <string>
 #include <fstream>
 #include <random>
+#include "EndGame.h"
 using std::ifstream;
 using std::string;
 
@@ -38,7 +39,7 @@ void Level1::Init()
     scene = new Scene();
 
     // cria background
-    backg = new Sprite("Resources/Level1New.jpg");
+    backg = new Sprite("Resources/Level1.jpg");
 
     Player* playerOne = new Player({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 }, PLAYER1, 0);
     playerOne->MoveTo(250.0f, 450.0f);
@@ -205,7 +206,7 @@ void Level1::Update()
     {
         GameManager::endGame = false;
         // volta para a tela de abertura
-        Engine::Next<Home>();
+        Engine::Next<EndGame>();
     }
     else
     {

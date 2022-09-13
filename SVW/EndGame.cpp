@@ -1,63 +1,55 @@
 /**********************************************************************************
-// Home (Código Fonte) 
-// 
-// Criação:     18 Jan 2013
-// Atualização: 25 Ago 2021
-// Compilador:  Visual C++ 2019
+// EndGame (Código Fonte)
 //
-// Descrição:   Tela de abertura do jogo SVW
+// Descrição:   Tela de encerramento do jogo
 //
 **********************************************************************************/
 
 #include "Engine.h"
+#include "EndGame.h"
 #include "Home.h"
-#include "Level1.h"
-#include "CharSelect.h"
+#include "GameManager.h"
 
 // ------------------------------------------------------------------------------
 
-void Home::Init()
+void EndGame::Init()
 {
-    backg = new Sprite("Resources/TitleScreen.png");
+    player = new Sprite(GameManager::playerImages[GameManager::winnerSpriteID] + ".png");
+
+    if (GameManager::winner == PLAYER1)
+        backg = new Sprite("Resources/tela-vencedor-p1.png");
+    else
+        backg = new Sprite("Resources/tela-vencedor-p2.png");
 }
 
 // ------------------------------------------------------------------------------
 
-void Home::Finalize()
+void EndGame::Finalize()
 {
     delete backg;
+    delete player;
 }
 
 // ------------------------------------------------------------------------------
 
-void Home::Update()
+void EndGame::Update()
 {
-    // sai do jogo com a tecla ESC
-    if (ctrlKeyESC && window->KeyDown(VK_ESCAPE))
-    {
-        ctrlKeyESC = false;
-        window->Close();
-    }
-    else if (window->KeyUp(VK_ESCAPE))
-    {
-        ctrlKeyESC = true;
-    }
-
     // passa ao primeiro nível com ENTER
-    if (ctrlKeyEnter && window->KeyDown(VK_RETURN)) {
+    if (ctrlKeyEnter && window->KeyDown(VK_SPACE)) {
         ctrlKeyEnter = false;
-        Engine::Next<CharSelect>();
+        Engine::Next<Home>();
     }
-    else if (window->KeyUp(VK_RETURN)) {
+    else if (window->KeyUp(VK_SPACE)) {
         ctrlKeyEnter = true;
     }
 }
 
 // ------------------------------------------------------------------------------
 
-void Home::Draw()
+void EndGame::Draw()
 {
     backg->Draw(float(window->CenterX()), float(window->CenterY()), Layer::BACK);
+    player->Draw(float(window->CenterX()), float(window->CenterY()));
 }
 
 // ------------------------------------------------------------------------------

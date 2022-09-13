@@ -238,6 +238,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CharSelect.cpp" />
+    <ClCompile Include="EndGame.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Food.cpp" />
@@ -262,6 +263,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CharSelect.h" />
+    <ClInclude Include="EndGame.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Food.h" />
