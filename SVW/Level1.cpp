@@ -41,6 +41,14 @@ void Level1::Init()
     // cria background
     backg = new Sprite("Resources/Level1.jpg");
 
+    explosionTs = new TileSet("Resources/Explosion2Small.png", 70, 40.66666f, 1, 6);
+    blueExplosionTs = new TileSet("Resources/BlueExplosion2.png", 152, 88.16666f, 1, 6);
+    puffTs = new TileSet("Resources/Puff.png", 128, 128, 10, 10);
+
+    GameManager::blueExplosionTs = blueExplosionTs;
+    GameManager::explosionTs = explosionTs;
+    GameManager::puffTs = puffTs;
+
     Player* playerOne = new Player({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 }, PLAYER1, 0);
     playerOne->MoveTo(250.0f, 450.0f);
     scene->Add(playerOne, MOVING);
@@ -79,58 +87,6 @@ void Level1::Init()
         fin >> left;
     }
     fin.close();
-
-    //fin.open("RangedPivotsL1.txt");
-    //bool wich;
-    //float end;
-    //fin >> left;
-    //while (!fin.eof())
-    //{
-    //    if (fin.good())
-    //    {
-    //        // lê linha de informações do pivô
-    //        fin >> right; fin >> up; fin >> down; fin >> posX; fin >> posY; fin >> wich; fin >> end;
-
-    //        if (wich) {
-    //            for (float i = posX; i <= end; i += 15.0f) {
-    //                pivot = new Pivot(left, right, up, down);
-    //                pivot->MoveTo(i, posY);
-    //                scene->Add(pivot, STATIC);
-    //            }
-
-    //            posX = window->Width() - posX;
-    //            end = window->Width() - end;
-
-    //            for (float i = posX; i >= end; i -= 15.0f) {
-    //                pivot = new Pivot(left, right, up, down);
-    //                pivot->MoveTo(i, posY);
-    //                scene->Add(pivot, STATIC);
-    //            }
-    //        }
-    //        else {
-    //            for (float i = posY; i <= end; i += 15.0f) {
-    //                pivot = new Pivot(left, right, up, down);
-    //                pivot->MoveTo(posX, i);
-    //                scene->Add(pivot, STATIC);
-    //            }
-
-    //            for (float i = posY; i <= end; i += 15.0f) {
-    //                pivot = new Pivot(left, right, up, down);
-    //                pivot->MoveTo(window->Width() - posX, i);
-    //                scene->Add(pivot, STATIC);
-    //            }
-    //        }
-    //    }
-    //    else
-    //    {
-    //        // ignora comentários
-    //        fin.clear();
-    //        char temp[80];
-    //        fin.getline(temp, 80);
-    //    }
-    //    fin >> left;
-    //}
-    //fin.close();
 
     Wall* wall;
     float temp;
@@ -185,6 +141,9 @@ void Level1::Finalize()
     delete foodTime;
     delete backg;
     delete scene;
+    delete explosionTs;
+    delete blueExplosionTs;
+    delete puffTs;
 }
 
 // ------------------------------------------------------------------------------

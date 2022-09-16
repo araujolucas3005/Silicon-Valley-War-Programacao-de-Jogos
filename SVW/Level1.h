@@ -18,6 +18,7 @@
 #include "Game.h"
 #include "Sprite.h"
 #include "Level.h"
+#include "TileSet.h"
 
 // ------------------------------------------------------------------------------
 
@@ -28,6 +29,10 @@ private:
     bool viewBBox = false;          // habilita visualização da bounding box
     bool ctrlKeyB = false;          // controle da tecla B
     Timer* foodTime = nullptr;      // controla o tempo para aparecer comidas
+
+    TileSet* explosionTs;
+    TileSet* blueExplosionTs;
+    TileSet* puffTs;
 
 public:
     void Init();                    // inicializa jogo

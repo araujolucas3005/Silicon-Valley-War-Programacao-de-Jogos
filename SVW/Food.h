@@ -18,6 +18,7 @@
 #include "Types.h"                      // tipos específicos da engine
 #include "Object.h"                     // interface de Object
 #include "Sprite.h"                     // interface de Sprites
+#include "Timer.h"
 
 // ---------------------------------------------------------------------------------
 
@@ -27,6 +28,7 @@ class Food : public Object
 {
 private:
     Sprite * sprite = nullptr;          // sprite da comida
+    Timer* timer = nullptr;
 
 public:
     Food(FOODTYPE, float, float);       // construtor

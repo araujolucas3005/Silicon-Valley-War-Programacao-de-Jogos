@@ -3,6 +3,7 @@
 
 #include "Level.h"
 #include "Player.h"
+#include "TileSet.h"
 #include <string>
 #include <vector>
 using namespace std;
@@ -19,6 +20,11 @@ public:
 	static string playerImages[maxPlayers];
 	static PLAYERTYPE winner;
 	static int winnerSpriteID;
+	static TileSet* explosionTs;
+	static TileSet* blueExplosionTs;
+	static TileSet* puffTs;
+
+	static void AddObjectToCurrLevelScene(Object* obj, uint objType);
 };
 
 #endif

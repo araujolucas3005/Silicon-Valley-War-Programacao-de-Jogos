@@ -16,6 +16,8 @@
 #include "Projectile.h"
 #include "GameManager.h"
 #include "Wall.h"
+#include "LevelAnim.h"
+#include <random>
 
 // ---------------------------------------------------------------------------------
 
@@ -135,35 +137,83 @@ void Player::OnCollision(Object* obj)
 	{
 		Player* player = (Player*)obj;
 
+		if (playerType == PLAYER1) {
+			std::random_device dev;
+			std::mt19937 rng(dev());
+
+			std::uniform_int_distribution<std::mt19937::result_type> randomFt(0, 1);
+			std::uniform_int_distribution<std::mt19937::result_type> randomPos(0, GameManager::PivotPositions.size() - 1);
+			pair<float, float> pos1 = GameManager::PivotPositions[randomPos(rng)];
+			pair<float, float> pos2 = GameManager::PivotPositions[randomPos(rng)];
+
+			while (pos1.first != pos2.first && pos1.second != pos2.second) {
+				pos1 = GameManager::PivotPositions[randomPos(rng)];
+			}
+
+			MoveTo(pos1.first, pos1.second);
+			player->MoveTo(pos2.first, pos2.second);
+
+			if (GameManager::puffTs) {
+				LevelAnim* anim1 = new LevelAnim(GameManager::puffTs, 0.100f, false);
+				LevelAnim* anim2 = new LevelAnim(GameManager::puffTs, 0.100f, false);
+
+				anim1->MoveTo(x, y);
+				anim2->MoveTo(player->X(), player->Y());
+
+				GameManager::currLevel->scene->Add(anim1, STATIC);
+				GameManager::currLevel->scene->Add(anim2, STATIC);
+			}
+		}
+	
+
 		Stop();
 
-		switch (currState)
-		{
-		case UP:
-			MoveTo(x, player->Y() + 42);
-			break;
-		case DOWN:
-			MoveTo(x, player->Y() - 42);
-			break;
-		case LEFT:
-			MoveTo(player->X() + 42, y);
-			break;
-		case RIGHT:
-			MoveTo(player->X() - 42, y);
-			break;
-		default:
-			break;
-		}
+		//switch (currState)
+		//{
+		//case UP:
+		//	MoveTo(x, player->Y() + 42);
+		//	break;
+		//case DOWN:
+		//	MoveTo(x, player->Y() - 42);
+		//	break;
+		//case LEFT:
+		//	MoveTo(player->X() + 42, y);
+		//	break;
+		//case RIGHT:
+		//	MoveTo(player->X() - 42, y);
+		//	break;
+		//default:
+		//	break;
+		//}
 		currState = nextState = STOPED;
 	}
 	if (obj->Type() == PROJECTILE)
 	{
 		Projectile* projectile = (Projectile*)obj;
 		if (projectile->PlayerInfo() != this)
-			if (projectile->PlayerInfo()->specialPower)
+			if (projectile->PlayerInfo()->specialPower) {
 				life -= 2;
-			else
+
+				if (GameManager::blueExplosionTs) {
+					LevelAnim* anim = new LevelAnim(GameManager::blueExplosionTs, 0.1f);
+
+					anim->MoveTo(x, y);
+
+					GameManager::currLevel->scene->Add(anim, STATIC);
+				}
+			}
+
+			else {
 				life--;
+
+				if (GameManager::explosionTs) {
+					LevelAnim* anim = new LevelAnim(GameManager::explosionTs, 0.1f);
+
+					anim->MoveTo(x, y);
+
+					GameManager::currLevel->scene->Add(anim, STATIC);
+				}
+			}
 
 		if (life <= 0)
 		{

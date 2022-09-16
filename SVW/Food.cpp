@@ -11,6 +11,7 @@
 
 #include "SVW.h"
 #include "Food.h"
+#include "GameManager.h"
 
 // ---------------------------------------------------------------------------------
 
@@ -26,6 +27,10 @@ Food::Food(FOODTYPE ft, float x, float y)
         sprite = new Sprite("Resources/IdeaFood.png");
 
     MoveTo(x, y);
+
+    timer = new Timer();
+
+    timer->Start();
 }
 
 // ---------------------------------------------------------------------------------
@@ -39,6 +44,11 @@ Food::~Food()
 
 void Food::Update()
 {
+    if (timer->Elapsed() > 20) {
+        GameManager::foodNow--;
+
+        GameManager::currLevel->scene->Delete(this, STATIC);
+    }
 }
 
 // ---------------------------------------------------------------------------------

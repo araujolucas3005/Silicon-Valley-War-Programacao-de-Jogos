@@ -14,12 +14,15 @@
 
 void EndGame::Init()
 {
-    player = new Sprite(GameManager::playerImages[GameManager::winnerSpriteID] + ".png");
-
-    if (GameManager::winner == PLAYER1)
+    if (GameManager::winner == PLAYER1) {
+        player = new Sprite(GameManager::playerImages[0] + ".png");
         backg = new Sprite("Resources/tela-vencedor-p1.png");
-    else
+    }
+     
+    else {
+        player = new Sprite(GameManager::playerImages[1] + ".png");
         backg = new Sprite("Resources/tela-vencedor-p2.png");
+    }
 }
 
 // ------------------------------------------------------------------------------

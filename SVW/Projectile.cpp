@@ -14,6 +14,7 @@
 #include "Player.h"
 #include "GameManager.h"
 #include "Wall.h"
+#include "LevelAnim.h"
 
 // ---------------------------------------------------------------------------------
 
@@ -43,6 +44,21 @@ void Projectile::OnCollision(Object* obj) {
 		Wall* wall = (Wall*)obj;
 
 		GameManager::currLevel->scene->Delete(this, PROJECTILE);
+
+		if (GameManager::explosionTs && !player->specialPower) {
+			LevelAnim* anim = new LevelAnim(GameManager::explosionTs, 0.1f);
+
+			anim->MoveTo(x, y);
+
+			GameManager::currLevel->scene->Add(anim, STATIC);
+		}
+		else if (GameManager::blueExplosionTs && player->specialPower) {
+			LevelAnim* anim = new LevelAnim(GameManager::blueExplosionTs, 0.1f);
+
+			anim->MoveTo(x, y);
+
+			GameManager::currLevel->scene->Add(anim, STATIC);
+		}
 	}
 }
 

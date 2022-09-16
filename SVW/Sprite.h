@@ -1,8 +1,8 @@
 /**********************************************************************************
 // Sprite (Arquivo de Cabeçalho)
-// 
+//
 // Criação:     11 Jul 2007
-// Atualização: 13 Ago 2021
+// Atualização: 27 Ago 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Define uma classe para representar um sprite
@@ -15,6 +15,9 @@
 // ---------------------------------------------------------------------------------
 
 #include "Image.h"
+#include "Types.h"
+#include <DirectXMath.h>
+using namespace DirectX;
 
 // ---------------------------------------------------------------------------------
 
@@ -27,6 +30,8 @@ struct SpriteData
     uint  width;
     uint  height;
     ID3D11ShaderResourceView* texture;
+    XMFLOAT2 texCoord;
+    XMFLOAT2 texSize;
 };
 
 // ---------------------------------------------------------------------------------
@@ -47,11 +52,11 @@ class Sprite
 private:
     SpriteData sprite;              // dados do sprite 
     bool localImage;                // imagem local ou externa
-    const Image * image;            // ponteiro para uma imagem
+    const Image* image;            // ponteiro para uma imagem
 
 public:
     Sprite(string filename);        // constroi sprite a partir de um arquivo
-    Sprite(const Image * img);      // constroi sprite a partir de imagem existente
+    Sprite(const Image* img);      // constroi sprite a partir de imagem existente
     ~Sprite();                      // destrutor do sprite
 
     int Width();                    // largura do sprite
@@ -65,12 +70,16 @@ public:
 // Funções Inline
 
 // retorna a largura do sprite
-inline int Sprite::Width() 
-{ return image->Width(); }
+inline int Sprite::Width()
+{
+    return image->Width();
+}
 
 // retorna a altura do sprite
-inline int Sprite::Height() 
-{ return image->Height(); }
+inline int Sprite::Height()
+{
+    return image->Height();
+}
 
 // ---------------------------------------------------------------------------------
 

@@ -7,6 +7,8 @@
 #include "Game.h"
 #include "Sprite.h"
 #include "GameManager.h"
+#include "TileSet.h"
+#include "LevelAnim.h"
 using std::string;
 
 class CharSelect : public Game
@@ -27,6 +29,10 @@ private:
 	Sprite* selectedBorder = nullptr;
 	int selectedIndex[GameManager::maxPlayers];
 	int currentPlayerSelecting;
+
+	TileSet* coinTs = nullptr;
+	LevelAnim* coinAnim = nullptr;
+	LevelAnim* coinSelectedAnim = nullptr;
 
 	bool AlreadySelected(int index);
 
