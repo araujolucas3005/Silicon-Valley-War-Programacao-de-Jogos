@@ -27,7 +27,7 @@ void CharSelect::Init()
 	audio->Add(SELECTION, "Resources/SelectionSound.wav");
 	audio->Add(SELECTED, "Resources/SelectedSound.wav");
 	audio->Play(MUSIC);
-	coinTs = new TileSet("Resources/CoinSmall.png", 50.0f, 47.0f, 9, 9);
+	coinTs = new TileSet("Resources/CoinSmall.png", 50, 47, 9, 9);
 	coinAnim = new LevelAnim(coinTs, 0.05f, true);
 	coinSelectedAnim = new LevelAnim(coinTs, 0.05f, true);;
 

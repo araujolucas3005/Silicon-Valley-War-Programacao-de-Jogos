@@ -20,6 +20,9 @@
 #include "Level.h"
 #include "TileSet.h"
 #include "Audio.h"
+#include "Font.h"
+#include "Timer.h"
+#include "Player.h"
 
 
 // ------------------------------------------------------------------------------
@@ -27,15 +30,25 @@
 class Level1 : public Game, Level
 {
 private:
+    Player* playerOne = nullptr;
+    Player* playerTwo = nullptr;
+
     Sprite * backg = nullptr;       // background
     bool viewBBox = false;          // habilita visualização da bounding box
     bool ctrlKeyB = false;          // controle da tecla B
     Timer* foodTime = nullptr;      // controla o tempo para aparecer comidas
     Audio* audio = nullptr;         // controla o audio
 
-    TileSet* explosionTs;
-    TileSet* blueExplosionTs;
-    TileSet* puffTs;
+    boolean musicCtrl[2] = { 0 };
+
+    TileSet* explosionTs = nullptr;
+    TileSet* blueExplosionTs = nullptr;
+    TileSet* puffTs = nullptr;
+
+    Font* fontTimer = nullptr;
+
+    Timer* levelTimer = nullptr;
+    Timer* endingTimer = nullptr;
 
 public:
     void Init();                    // inicializa jogo

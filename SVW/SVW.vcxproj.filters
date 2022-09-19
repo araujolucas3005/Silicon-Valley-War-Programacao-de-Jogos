@@ -117,6 +117,9 @@
     <ClCompile Include="Sound.cpp">
       <Filter>Engine\Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Engine\Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h">
@@ -213,6 +216,9 @@
       <Filter>Engine\Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Sound.h">
+      <Filter>Engine\Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
       <Filter>Engine\Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

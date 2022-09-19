@@ -17,14 +17,15 @@
 #include "Food.h"
 #include "GameManager.h"
 #include "Wall.h"
+#include "EndGame.h"
 #include <string>
 #include <fstream>
 #include <random>
-#include "EndGame.h"
+#include <math.h>
 using std::ifstream;
 using std::string;
 
-enum { MUSIC, SHOOT };
+enum { MUSIC, SHOOT, BEEP, EXPLOSION, BLUE_EXPLOSION, PUFF };
 
 // ------------------------------------------------------------------------------
 
@@ -37,15 +38,14 @@ void Level1::Init()
 {
     GameManager::currLevel = this;
 
+    fontTimer = new Font("Resources/Digital.png");
+    fontTimer->Spacing(24);
 
     // cria gerenciador de cena
     scene = new Scene();
 
     // cria background
     backg = new Sprite("Resources/Level1.jpg");
-    audio = new Audio();
-    audio->Add(MUSIC, "Resources/PVPMusic.wav");
-    audio->Play(MUSIC);
 
     explosionTs = new TileSet("Resources/Explosion2Small.png", 70, 40.66666f, 1, 6);
     blueExplosionTs = new TileSet("Resources/BlueExplosion2.png", 152, 88.16666f, 1, 6);
@@ -55,11 +55,11 @@ void Level1::Init()
     GameManager::explosionTs = explosionTs;
     GameManager::puffTs = puffTs;
 
-    Player* playerOne = new Player({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 }, PLAYER1, 0);
+    playerOne = new Player({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 }, PLAYER1, 0);
     playerOne->MoveTo(250.0f, 450.0f);
     scene->Add(playerOne, MOVING);
 
-    Player* playerTwo = new Player({ 'W', 'A', 'S', 'D', 'K' }, PLAYER2, 1);
+    playerTwo = new Player({ 'W', 'A', 'S', 'D', 'K' }, PLAYER2, 1);
     playerTwo->MoveTo(705.0f, 450.0f);
     scene->Add(playerTwo, MOVING);
 
@@ -136,8 +136,19 @@ void Level1::Init()
     }
     fin.close();
 
+    audio = new Audio();
+    audio->Add(MUSIC, "Resources/PVPMusic.wav");
+    audio->Add(BEEP, "Resources/Beep.wav");
+    audio->Play(MUSIC);
+
     foodTime = new Timer();
     foodTime->Start();
+
+    levelTimer = new Timer();
+    levelTimer->Start();
+
+    endingTimer = new Timer();
+    endingTimer->Start();
 }
 
 // ------------------------------------------------------------------------------
@@ -151,12 +162,47 @@ void Level1::Finalize()
     delete blueExplosionTs;
     delete puffTs;
     delete audio;
+    delete fontTimer;
+    delete levelTimer;
+    delete endingTimer;
 }
 
 // ------------------------------------------------------------------------------
 
 void Level1::Update()
 {
+    int elapsed = floor(levelTimer->Elapsed());
+    if (60 - elapsed == 0) {
+        if (playerOne->LifeCount() < playerTwo->LifeCount()) {
+            GameManager::winner = PLAYER2;
+        }
+        else if (playerOne->LifeCount() > playerTwo->LifeCount()) {
+            GameManager::winner = PLAYER1;
+        }
+        else {
+            GameManager::draw = true;
+        }
+
+        Engine::Next<EndGame>();
+        return;
+    }
+
+    if (60 - elapsed <= 5 && endingTimer->Elapsed() > 1.0f) {
+        audio->Play(BEEP);
+        endingTimer->Start();
+    }
+
+   /* if (elapsed >= 40 && elapsed < 50 && !musicCtrl[0]) {
+        musicCtrl[0] = true;
+        audio->Add(MUSIC, "Resources/PVPMusicFast.wav");
+        audio->Play(MUSIC);
+    }
+    else if (elapsed >= 50 && !musicCtrl[0]) {
+        musicCtrl[0] = true;
+        audio->Add(MUSIC, "Resources/PVPMusicVeryFast.wav");
+        audio->Play(MUSIC);
+    }*/
+
     // habilita/desabilita bounding box
     if (ctrlKeyB && window->KeyDown('B'))
     {
@@ -200,6 +246,16 @@ void Level1::Draw()
     // desenha cena
     backg->Draw(float(window->CenterX()), float(window->CenterY()), Layer::BACK);
     scene->Draw();
+
+    Color white(1.0f, 1.0f, 1.0f, 1.0f);
+    Color red(1.0f, 0.2f, 0.2f, 1.0f);
+    Color yellow(1.0f, 1.0f, 0.4f, 1.0f);
+
+    int elapsed = floor(levelTimer->Elapsed());
+    int gameElapsed = 60 - elapsed;
+    string elapsedStr = (gameElapsed < 10 ? "0" : "") + std::to_string(gameElapsed);
+
+    fontTimer->Draw(window->CenterX(), 45, elapsedStr, gameElapsed > 20 ? white : gameElapsed > 10 ? yellow : red);
 
     // desenha bounding box dos objetos
     if (viewBBox)

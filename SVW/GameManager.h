@@ -24,6 +24,8 @@ public:
 	static TileSet* blueExplosionTs;
 	static TileSet* puffTs;
 
+	static bool draw;
+
 	static void AddObjectToCurrLevelScene(Object* obj, uint objType);
 };
 

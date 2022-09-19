@@ -38,6 +38,7 @@ Food::Food(FOODTYPE ft, float x, float y)
 Food::~Food()
 {
     delete sprite;
+    delete timer;
 }
 
 // ---------------------------------------------------------------------------------

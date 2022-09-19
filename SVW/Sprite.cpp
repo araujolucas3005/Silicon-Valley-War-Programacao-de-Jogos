@@ -2,7 +2,7 @@
 // Sprite (Código Fonte)
 //
 // Criação:     11 Jul 2007
-// Atualização: 27 Ago 2021
+// Atualização: 08 Set 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Define uma classe para representar um sprite
@@ -56,22 +56,23 @@ Sprite::~Sprite()
 
 // ---------------------------------------------------------------------------------
 
-void Sprite::Draw(float x, float y, float z)
+void Sprite::Draw(float x, float y, float z, float scale, float rotation, Color color)
 {
     sprite.x = x;
     sprite.y = y;
-    sprite.scale = 1.0f;
+    sprite.scale = scale;
     sprite.depth = z;
-    sprite.rotation = 0.0f;
+    sprite.rotation = rotation;
     sprite.width = image->Width();
     sprite.height = image->Height();
     sprite.texCoord.x = 0;
     sprite.texCoord.y = 0;
     sprite.texSize.x = 1;
     sprite.texSize.y = 1;
+    sprite.color = color;
 
     // adiciona o sprite na lista de desenho
-    Engine::renderer->Draw(&sprite);
+    Engine::renderer->Draw(sprite);
 }
 
 // ---------------------------------------------------------------------------------

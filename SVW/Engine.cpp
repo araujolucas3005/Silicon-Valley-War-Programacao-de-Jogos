@@ -22,21 +22,21 @@ using std::stringstream;
 // ------------------------------------------------------------------------------
 // Inicialização de variáveis estáticas da classe
 
-Game     * Engine::game      = nullptr;     // jogo em execução
-Window   * Engine::window    = nullptr;     // janela do jogo
-Graphics * Engine::graphics  = nullptr;     // dispositivo gráfico
-Renderer * Engine::renderer  = nullptr;     // renderizador de sprites 
+Game* Engine::game = nullptr;     // jogo em execução
+Window* Engine::window = nullptr;     // janela do jogo
+Graphics* Engine::graphics = nullptr;     // dispositivo gráfico
+Renderer* Engine::renderer = nullptr;     // renderizador de sprites 
 float      Engine::frameTime = 0.0f;        // tempo do quadro atual
-bool       Engine::paused    = false;       // estado do game loop
+bool       Engine::paused = false;       // estado do game loop
 Timer      Engine::timer;                   // medidor de tempo
 
 // -------------------------------------------------------------------------------
 
 Engine::Engine()
 {
-    window     = new Window();
-    graphics   = new Graphics();
-    renderer   = new Renderer();
+    window = new Window();
+    graphics = new Graphics();
+    renderer = new Renderer();
 }
 
 // -------------------------------------------------------------------------------
@@ -192,10 +192,10 @@ float Engine::FrameTime()
     static float totalTime = 0.0f;    // tempo total transcorrido 
     static uint  frameCount = 0;      // contador de frames transcorridos
 #endif
-    
+
     // tempo do frame atual em segundos
     frameTime = timer.Reset();
-    
+
 #ifdef _DEBUG
     // tempo acumulado dos frames
     totalTime += frameTime;

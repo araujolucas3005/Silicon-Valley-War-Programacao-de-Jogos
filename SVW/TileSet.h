@@ -2,7 +2,7 @@
 // TileSet (Arquivo de Cabeçalho)
 //
 // Criação:     17 Abr 2012
-// Atualização: 27 Ago 2021
+// Atualização: 08 Set 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Representa uma folha de sprites
@@ -37,6 +37,11 @@ public:
         uint tileHeight,                // altura de um quadro
         uint numCols,                   // número de colunas na folha
         uint numTiles);                 // quantidade de quadros
+
+    TileSet(string filename,                // nome do arquivo
+        uint numLines,                  // número de linhas na folha
+        uint numCols);                  // número de colunas na folha
+
     ~TileSet();
 
     uint    TileWidth();                    // retorna a largura de um quadro

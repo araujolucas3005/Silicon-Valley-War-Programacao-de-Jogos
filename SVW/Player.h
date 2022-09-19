@@ -95,6 +95,8 @@ public:
 	void Left();                        // muda direção para esquerda
 	void Right();                       // muda direção para direita
 
+	int LifeCount() { return life; };
+
 	void OnCollision(Object* obj);     // resolução da colisão
 	void PivotCollision(Object* obj);  // revolve colisão com pivô
 

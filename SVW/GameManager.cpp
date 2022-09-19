@@ -11,6 +11,7 @@ int GameManager::winnerSpriteID = 0;
 TileSet* GameManager::explosionTs = nullptr;
 TileSet* GameManager::blueExplosionTs = nullptr;
 TileSet* GameManager::puffTs = nullptr;
+bool GameManager::draw = false;
 
 void GameManager::AddObjectToCurrLevelScene(Object* obj, uint objType) {
 	if (currLevel && obj) {

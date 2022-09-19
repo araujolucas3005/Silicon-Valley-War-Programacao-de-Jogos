@@ -2,7 +2,7 @@
 // Sprite (Arquivo de Cabeçalho)
 //
 // Criação:     11 Jul 2007
-// Atualização: 27 Ago 2021
+// Atualização: 08 Set 2021
 // Compilador:  Visual C++ 2019
 //
 // Descrição:   Define uma classe para representar um sprite
@@ -21,6 +21,28 @@ using namespace DirectX;
 
 // ---------------------------------------------------------------------------------
 
+struct Layer
+{
+    static const float FRONT;
+    static const float UPPER;
+    static const float MIDDLE;
+    static const float LOWER;
+    static const float BACK;
+};
+
+// definição de cor para o sprite
+struct Color
+{
+    float r;
+    float g;
+    float b;
+    float a;
+
+    Color(float red, float green, float blue, float alpha) :
+        r(red), g(green), b(blue), a(alpha) {}
+};
+
+// definição de um sprite
 struct SpriteData
 {
     float x, y;
@@ -32,18 +54,19 @@ struct SpriteData
     ID3D11ShaderResourceView* texture;
     XMFLOAT2 texCoord;
     XMFLOAT2 texSize;
+    Color color;
+
+    SpriteData() :
+        x(0), y(0),
+        scale(0), depth(0), rotation(0),
+        width(0), height(0),
+        texture(nullptr),
+        texCoord(XMFLOAT2(0, 0)),
+        texSize(XMFLOAT2(0, 0)),
+        color(Color(1, 1, 1, 1)) {}
 };
 
 // ---------------------------------------------------------------------------------
-
-struct Layer
-{
-    static const float FRONT;
-    static const float UPPER;
-    static const float MIDDLE;
-    static const float LOWER;
-    static const float BACK;
-};
 
 // ---------------------------------------------------------------------------------
 
@@ -51,8 +74,8 @@ class Sprite
 {
 private:
     SpriteData sprite;              // dados do sprite 
-    bool localImage;                // imagem local ou externa
     const Image* image;            // ponteiro para uma imagem
+    bool localImage;                // imagem local ou externa
 
 public:
     Sprite(string filename);        // constroi sprite a partir de um arquivo
@@ -62,8 +85,10 @@ public:
     int Width();                    // largura do sprite
     int Height();                   // altura do sprite
 
-    // desenha imagem na posição (x,y) e profundidade (z)
-    void Draw(float x, float y, float z = Layer::MIDDLE);
+    void Draw(                                                // desenha sprite
+        float x, float y, float z = Layer::MIDDLE,            // coordenadas da tela
+        float scale = 1.0f, float rotation = 0.0f,            // escala e rotação
+        Color color = { 1, 1, 1, 1 });                        // efeito de cor
 };
 
 // ---------------------------------------------------------------------------------
