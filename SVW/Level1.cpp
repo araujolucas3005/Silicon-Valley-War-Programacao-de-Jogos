@@ -177,14 +177,14 @@ void Level1::Update()
     else
     {
         // Adiciona comidas aleatorias na cena se o tempo se passou e se nao atingiu o limite de comidas
-        if (foodTime->Elapsed() > 5 && (GameManager::foodNow < GameManager::foodLimit))
+        if (foodTime->Elapsed() >= 5 && (GameManager::foodNow < GameManager::foodLimit))
         {
             std::uniform_int_distribution<std::mt19937::result_type> randomFt(0, 1);
             std::uniform_int_distribution<std::mt19937::result_type> randomPos(0, GameManager::PivotPositions.size() - 1);
-            foodTime->Start();
             pair<float, float> foodPos = GameManager::PivotPositions[randomPos(rng)];
             scene->Add(new Food((FOODTYPE) randomFt(rng), foodPos.first, foodPos.second), STATIC);
             GameManager::foodNow++;
+            foodTime->Start();
         }
 
         // atualiza cena

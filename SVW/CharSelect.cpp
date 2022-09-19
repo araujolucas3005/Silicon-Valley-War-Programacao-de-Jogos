@@ -37,7 +37,7 @@ void CharSelect::Init()
 	charSelectImg[3] = "Resources/microsoft";
 
 	for (int i = 0; i < charsCount; i++) {
-		charSelectSprite[i] = new Sprite(charSelectImg[i] + ".png");
+		charSelectSprite[i] = new Sprite(charSelectImg[i] + "_grande.png");
 	}
 
 	for (int i = 0; i < GameManager::maxPlayers; i++) {

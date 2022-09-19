@@ -19,12 +19,12 @@ void EndGame::Init()
     audio->Add(MUSIC, "Resources/VictorySound.wav");
     audio->Play(MUSIC);
     if (GameManager::winner == PLAYER1) {
-        player = new Sprite(GameManager::playerImages[0] + ".png");
+        player = new Sprite(GameManager::playerImages[0] + "_grande.png");
         backg = new Sprite("Resources/tela-vencedor-p1.png");
     }
      
     else {
-        player = new Sprite(GameManager::playerImages[1] + ".png");
+        player = new Sprite(GameManager::playerImages[1] + "_grande.png");
         backg = new Sprite("Resources/tela-vencedor-p2.png");
     }
 }
