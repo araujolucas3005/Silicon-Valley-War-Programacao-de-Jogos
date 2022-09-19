@@ -237,6 +237,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Audio.cpp" />
     <ClCompile Include="LevelAnim.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="CharSelect.cpp" />
@@ -252,6 +253,7 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="Sound.cpp" />
     <ClCompile Include="SVW.cpp" />
     <ClCompile Include="Pivot.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -265,6 +267,7 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Audio.h" />
     <ClInclude Include="LevelAnim.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="CharSelect.h" />
@@ -281,6 +284,7 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="Level1.h" />
     <ClInclude Include="Object.h" />
+    <ClInclude Include="Sound.h" />
     <ClInclude Include="SVW.h" />
     <ClInclude Include="Pivot.h" />
     <ClInclude Include="Player.h" />
