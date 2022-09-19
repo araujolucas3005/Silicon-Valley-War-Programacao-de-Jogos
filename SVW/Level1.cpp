@@ -24,6 +24,8 @@
 using std::ifstream;
 using std::string;
 
+enum { MUSIC, SHOOT };
+
 // ------------------------------------------------------------------------------
 
 std::random_device dev;
@@ -35,11 +37,15 @@ void Level1::Init()
 {
     GameManager::currLevel = this;
 
+
     // cria gerenciador de cena
     scene = new Scene();
 
     // cria background
     backg = new Sprite("Resources/Level1.jpg");
+    audio = new Audio();
+    audio->Add(MUSIC, "Resources/PVPMusic.wav");
+    audio->Play(MUSIC);
 
     explosionTs = new TileSet("Resources/Explosion2Small.png", 70, 40.66666f, 1, 6);
     blueExplosionTs = new TileSet("Resources/BlueExplosion2.png", 152, 88.16666f, 1, 6);
@@ -144,6 +150,7 @@ void Level1::Finalize()
     delete explosionTs;
     delete blueExplosionTs;
     delete puffTs;
+    delete audio;
 }
 
 // ------------------------------------------------------------------------------

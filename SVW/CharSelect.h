@@ -9,6 +9,7 @@
 #include "GameManager.h"
 #include "TileSet.h"
 #include "LevelAnim.h"
+#include "Audio.h"
 using std::string;
 
 class CharSelect : public Game
@@ -27,6 +28,7 @@ private:
 	Sprite* charSelectSprite[charsCount];
 	Sprite* border = nullptr;
 	Sprite* selectedBorder = nullptr;
+	Audio* audio = nullptr;         // controla o audio
 	int selectedIndex[GameManager::maxPlayers];
 	int currentPlayerSelecting;
 

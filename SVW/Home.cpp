@@ -14,11 +14,18 @@
 #include "Level1.h"
 #include "CharSelect.h"
 
+enum { MUSIC, TRANSITION };
+
 // ------------------------------------------------------------------------------
 
 void Home::Init()
 {
     backg = new Sprite("Resources/TitleScreen.png");
+    audio = new Audio();
+    audio->Add(MUSIC, "Resources/HomeMusic.wav");
+    audio->Add(TRANSITION, "Resources/Transition.wav");
+    audio->Play(MUSIC);
+    
 }
 
 // ------------------------------------------------------------------------------
@@ -26,6 +33,7 @@ void Home::Init()
 void Home::Finalize()
 {
     delete backg;
+    delete audio;
 }
 
 // ------------------------------------------------------------------------------
@@ -46,6 +54,8 @@ void Home::Update()
     // passa ao primeiro nível com ENTER
     if (ctrlKeyEnter && window->KeyDown(VK_RETURN)) {
         ctrlKeyEnter = false;
+        audio->Play(TRANSITION);
+        Sleep(500); //Delay para haver o som de transição
         Engine::Next<CharSelect>();
     }
     else if (window->KeyUp(VK_RETURN)) {

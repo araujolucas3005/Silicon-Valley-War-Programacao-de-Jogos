@@ -13,6 +13,8 @@
 #include "CharSelect.h"
 #include "Level1.h"
 
+enum { MUSIC, SELECTION, SELECTED };
+
 // ------------------------------------------------------------------------------
 
 void CharSelect::Init()
@@ -20,6 +22,11 @@ void CharSelect::Init()
 	backg = new Sprite("Resources/selecao-personagem.png");
 	border = new Sprite("Resources/Special.png");
 	selectedBorder = new Sprite("Resources/Special.png");
+	audio = new Audio();
+	audio->Add(MUSIC, "Resources/SelectMusic.wav");
+	audio->Add(SELECTION, "Resources/SelectionSound.wav");
+	audio->Add(SELECTED, "Resources/SelectedSound.wav");
+	audio->Play(MUSIC);
 	coinTs = new TileSet("Resources/CoinSmall.png", 50.0f, 47.0f, 9, 9);
 	coinAnim = new LevelAnim(coinTs, 0.05f, true);
 	coinSelectedAnim = new LevelAnim(coinTs, 0.05f, true);;
@@ -50,6 +57,7 @@ void CharSelect::Finalize()
 	delete coinTs;
 	delete coinAnim;
 	delete coinSelectedAnim;
+	delete audio;
 
 	for (int i = 0; i < charsCount; i++) {
 		delete charSelectSprite[i];
@@ -72,10 +80,13 @@ void CharSelect::Update()
 {
 	if (ctrlEnter && window->KeyDown(VK_RETURN)) {
 		ctrlEnter = false;
+		audio->Play(SELECTED);
 		selectedIndex[currentPlayerSelecting] = index;
 		GameManager::playerImages[currentPlayerSelecting++] = charSelectImg[index];
 
 		if (currentPlayerSelecting == GameManager::maxPlayers) {
+			audio->Play(SELECTED);
+			Sleep(800);
 			Engine::Next<Level1>();
 			return;
 		}
@@ -88,6 +99,7 @@ void CharSelect::Update()
 
 	if (ctrlKeyRight && window->KeyDown(VK_RIGHT) && index + 1 < charsCount) {
 		ctrlKeyRight = false;
+		audio->Play(SELECTION);
 
 		if (AlreadySelected(index + 1)) {
 			if (index + 2 < charsCount) {
@@ -104,6 +116,7 @@ void CharSelect::Update()
 
 	if (ctrlKeyLeft && window->KeyDown(VK_LEFT) && index) {
 		ctrlKeyLeft = false;
+		audio->Play(SELECTION);
 
 		if (AlreadySelected(index - 1)) {
 			if (index - 2 >= 0) {
@@ -114,6 +127,7 @@ void CharSelect::Update()
 			index -= 1;
 	}
 	else if (window->KeyUp(VK_LEFT)) {
+		
 		ctrlKeyLeft = true;
 	}
 

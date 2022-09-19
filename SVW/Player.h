@@ -22,6 +22,7 @@
 #include "Scene.h"
 #include "Timer.h"
 #include "string"
+#include "Audio.h"
 #include <vector>
 using namespace std;
 
@@ -53,6 +54,7 @@ private:
 	Sprite* currSprite = nullptr;
 	Sprite* playerTypeSprite = nullptr;// sprite para identificar o jogador 1 ou 2
 	Sprite* letterP = nullptr;
+	Audio* audio = nullptr;         // controla o audio
 	vector<Sprite*> lifeChain;
 	Image* heart = nullptr;				// sprite do coracao
 	PLAYERTYPE playerType;

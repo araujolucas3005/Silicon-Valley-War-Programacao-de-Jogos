@@ -19,6 +19,8 @@
 #include "Sprite.h"
 #include "Level.h"
 #include "TileSet.h"
+#include "Audio.h"
+
 
 // ------------------------------------------------------------------------------
 
@@ -29,6 +31,7 @@ private:
     bool viewBBox = false;          // habilita visualização da bounding box
     bool ctrlKeyB = false;          // controle da tecla B
     Timer* foodTime = nullptr;      // controla o tempo para aparecer comidas
+    Audio* audio = nullptr;         // controla o audio
 
     TileSet* explosionTs;
     TileSet* blueExplosionTs;

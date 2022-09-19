@@ -18,6 +18,7 @@
 #include "Wall.h"
 #include "LevelAnim.h"
 #include <random>
+enum { MUSIC, EFFECT, FOODSOUND, DEATH, PROJECTILESOUND};
 
 // ---------------------------------------------------------------------------------
 
@@ -35,6 +36,12 @@ Player::Player(MovementKeys movementKeys, PLAYERTYPE pt, int playerCount)
 
 	letterP = new Sprite("Resources/letterP.png");
 	heart = new Image("Resources/heart.png");
+	audio = new Audio();
+	audio->Add(EFFECT, "Resources/PlayerCollisionSound.wav");
+	audio->Add(FOODSOUND, "Resources/FoodSound.wav");
+	audio->Add(PROJECTILESOUND, "Resources/ProjectileSound.wav");
+	audio->Add(DEATH, "Resources/DeathSound.wav");
+
 
 	if (pt == PLAYER1)
 	{
@@ -82,6 +89,7 @@ Player::~Player()
 	delete bulletHoriImg;
 	delete bulletVerImg;
 	delete playerTypeSprite;
+	delete audio;
 
 	for (int i = 0; i < life; i++)
 	{
@@ -147,6 +155,7 @@ void Player::OnCollision(Object* obj)
 			pair<float, float> pos2 = GameManager::PivotPositions[randomPos(rng)];
 
 			while (pos1.first != pos2.first && pos1.second != pos2.second) {
+				audio->Play(EFFECT);
 				pos1 = GameManager::PivotPositions[randomPos(rng)];
 			}
 
@@ -190,7 +199,8 @@ void Player::OnCollision(Object* obj)
 	if (obj->Type() == PROJECTILE)
 	{
 		Projectile* projectile = (Projectile*)obj;
-		if (projectile->PlayerInfo() != this)
+		if (projectile->PlayerInfo() != this){
+					
 			if (projectile->PlayerInfo()->specialPower) {
 				life -= 2;
 
@@ -214,9 +224,12 @@ void Player::OnCollision(Object* obj)
 					GameManager::currLevel->scene->Add(anim, STATIC);
 				}
 			}
-
+		}
+	
 		if (life <= 0)
 		{
+			audio->Play(DEATH);
+			Sleep(1000);
 			GameManager::winner = projectile->PlayerInfo()->playerType;
 			GameManager::winnerSpriteID = playerSpriteID;
 			GameManager::endGame = true;
@@ -233,7 +246,7 @@ void Player::OnCollision(Object* obj)
 			specialPower = true;
 			specialPowerTimer->Start();
 		}
-
+		audio->Play(FOODSOUND);
 		GameManager::currLevel->scene->Delete(fd, STATIC);
 		GameManager::foodNow--;
 	}
@@ -590,6 +603,7 @@ void Player::Update()
 		timer->Start();
 
 		ctrlShot = false;
+		audio->Play(PROJECTILESOUND);
 
 		float pX = 0;
 		float pY = 0;

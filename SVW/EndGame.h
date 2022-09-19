@@ -15,6 +15,7 @@
 #include "Game.h"
 #include "Sprite.h"
 #include "Level.h"
+#include "Audio.h"
 
 // ------------------------------------------------------------------------------
 
@@ -23,6 +24,7 @@ class EndGame : public Game, Level
 private:
     Sprite* backg = nullptr;       // background
     Sprite* player = nullptr;
+    Audio* audio = nullptr;         // controla o audio
     bool ctrlKeyEnter = false;
 
 public:

@@ -17,6 +17,7 @@
 
 #include "Game.h"
 #include "Sprite.h"
+#include "Audio.h"
 
 // ------------------------------------------------------------------------------
 
@@ -26,6 +27,7 @@ private:
     Sprite * backg = nullptr;       // pano de fundo
     bool ctrlKeyESC = false;        // controle do ESC
     bool ctrlKeyEnter = false;
+    Audio* audio = nullptr;         // contnrola o audio
 
 public:
     void Init();                    // inicialização

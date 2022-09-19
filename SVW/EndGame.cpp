@@ -9,11 +9,15 @@
 #include "EndGame.h"
 #include "Home.h"
 #include "GameManager.h"
+enum {MUSIC};
 
 // ------------------------------------------------------------------------------
 
 void EndGame::Init()
 {
+    audio = new Audio();
+    audio->Add(MUSIC, "Resources/VictorySound.wav");
+    audio->Play(MUSIC);
     if (GameManager::winner == PLAYER1) {
         player = new Sprite(GameManager::playerImages[0] + ".png");
         backg = new Sprite("Resources/tela-vencedor-p1.png");
@@ -31,6 +35,7 @@ void EndGame::Finalize()
 {
     delete backg;
     delete player;
+    delete audio;
 }
 
 // ------------------------------------------------------------------------------
