@@ -257,7 +257,7 @@ void Level1::Draw()
     int gameElapsed = 60 - elapsed;
     string elapsedStr = (gameElapsed < 10 ? "0" : "") + std::to_string(gameElapsed);
 
-    fontTimer->Draw(window->CenterX(), 45, elapsedStr, gameElapsed > 20 ? white : gameElapsed > 10 ? yellow : red);
+    fontTimer->Draw(window->CenterX()+15, 45, elapsedStr, gameElapsed > 20 ? white : gameElapsed > 10 ? yellow : red);
 
     // desenha bounding box dos objetos
     if (viewBBox)
