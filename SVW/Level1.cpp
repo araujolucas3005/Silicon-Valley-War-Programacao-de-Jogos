@@ -25,7 +25,7 @@
 using std::ifstream;
 using std::string;
 
-enum { MUSIC, SHOOT, BEEP, EXPLOSION, BLUE_EXPLOSION, PUFF };
+enum { MUSIC, SHOOT, BEEP, WHISTLE };
 
 // ------------------------------------------------------------------------------
 
@@ -139,6 +139,7 @@ void Level1::Init()
     audio = new Audio();
     audio->Add(MUSIC, "Resources/PVPMusic.wav");
     audio->Add(BEEP, "Resources/Beep.wav");
+    audio->Add(WHISTLE, "Resources/whistle.wav");
     audio->Play(MUSIC);
 
     foodTime = new Timer();
@@ -182,6 +183,9 @@ void Level1::Update()
         else {
             GameManager::draw = true;
         }
+
+        audio->Play(WHISTLE);
+        Sleep(1000);
 
         Engine::Next<EndGame>();
         return;

@@ -146,16 +146,16 @@ void Player::OnCollision(Object* obj)
 		Player* player = (Player*)obj;
 
 		if (playerType == PLAYER1) {
+			audio->Play(EFFECT);
+
 			std::random_device dev;
 			std::mt19937 rng(dev());
 
-			std::uniform_int_distribution<std::mt19937::result_type> randomFt(0, 1);
 			std::uniform_int_distribution<std::mt19937::result_type> randomPos(0, GameManager::PivotPositions.size() - 1);
 			pair<float, float> pos1 = GameManager::PivotPositions[randomPos(rng)];
 			pair<float, float> pos2 = GameManager::PivotPositions[randomPos(rng)];
 
-			while (pos1.first != pos2.first && pos1.second != pos2.second) {
-				audio->Play(EFFECT);
+			while (pos1.first == pos2.first && pos1.second == pos2.second) {
 				pos1 = GameManager::PivotPositions[randomPos(rng)];
 			}
 
