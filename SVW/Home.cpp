@@ -26,8 +26,6 @@ void Home::Init()
     audio->Add(MUSIC, "Resources/HomeMusic.wav");
     audio->Add(TRANSITION, "Resources/Transition.wav");
     audio->Play(MUSIC);
-
-    
 }
 
 // ------------------------------------------------------------------------------
@@ -36,6 +34,7 @@ void Home::Finalize()
 {
     delete backg;
     delete audio;
+    delete controls;
 }
 
 // ------------------------------------------------------------------------------
