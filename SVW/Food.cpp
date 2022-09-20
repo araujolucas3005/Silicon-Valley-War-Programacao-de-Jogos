@@ -29,8 +29,10 @@ Food::Food(FOODTYPE ft, float x, float y)
     MoveTo(x, y);
 
     timer = new Timer();
+    auxTimer = new Timer();
 
     timer->Start();
+    auxTimer->Start();
 }
 
 // ---------------------------------------------------------------------------------
@@ -39,6 +41,7 @@ Food::~Food()
 {
     delete sprite;
     delete timer;
+    delete auxTimer;
 }
 
 // ---------------------------------------------------------------------------------
@@ -51,5 +54,19 @@ void Food::Update()
         GameManager::currLevel->scene->Delete(this, STATIC);
     }
 }
+
+void Food::Draw()
+{
+    float auxElapsed = auxTimer->Elapsed();
+
+    if (timer->Elapsed() > 15 && auxElapsed > 0.5f) {
+        if (auxElapsed > 1.0f)
+            auxTimer->Start();
+        sprite->Draw(-50, -50, z);
+    }
+    else 
+        sprite->Draw(x, y, z);
+}
+
 
 // ---------------------------------------------------------------------------------

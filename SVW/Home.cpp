@@ -20,11 +20,13 @@ enum { MUSIC, TRANSITION };
 
 void Home::Init()
 {
-    backg = new Sprite("Resources/TitleScreen.png");
+    backg = new Sprite("Resources/menu_principal_v2.png");
+    controls = new Sprite("Resources/controles.png");
     audio = new Audio();
     audio->Add(MUSIC, "Resources/HomeMusic.wav");
     audio->Add(TRANSITION, "Resources/Transition.wav");
     audio->Play(MUSIC);
+
     
 }
 
@@ -67,6 +69,10 @@ void Home::Update()
 
 void Home::Draw()
 {
+    if (window->KeyDown('Q')) {
+        controls->Draw(float(window->CenterX()), float(window->CenterY()), Layer::FRONT);
+    }
+
     backg->Draw(float(window->CenterX()), float(window->CenterY()), Layer::BACK);
 }
 

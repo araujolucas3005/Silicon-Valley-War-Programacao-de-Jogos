@@ -28,6 +28,7 @@ private:
     bool ctrlKeyESC = false;        // controle do ESC
     bool ctrlKeyEnter = false;
     Audio* audio = nullptr;         // contnrola o audio
+    Sprite* controls = nullptr;
 
 public:
     void Init();                    // inicialização

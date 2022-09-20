@@ -55,11 +55,11 @@ void Level1::Init()
     GameManager::explosionTs = explosionTs;
     GameManager::puffTs = puffTs;
 
-    playerOne = new Player({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 }, PLAYER1, 0);
+    playerOne = new Player({ 'W', 'A', 'S', 'D', 'K' }, PLAYER1, 0);
     playerOne->MoveTo(250.0f, 450.0f);
     scene->Add(playerOne, MOVING);
 
-    playerTwo = new Player({ 'W', 'A', 'S', 'D', 'K' }, PLAYER2, 1);
+    playerTwo = new Player({ VK_UP, VK_LEFT, VK_DOWN, VK_RIGHT, VK_NUMPAD0 }, PLAYER2, 1);
     playerTwo->MoveTo(705.0f, 450.0f);
     scene->Add(playerTwo, MOVING);
 
@@ -172,7 +172,7 @@ void Level1::Finalize()
 void Level1::Update()
 {
     int elapsed = floor(levelTimer->Elapsed());
-    if (60 - elapsed == 0) {
+    if (60 - elapsed <= 0) {
         if (playerOne->LifeCount() < playerTwo->LifeCount()) {
             GameManager::winner = PLAYER2;
         }
@@ -213,8 +213,10 @@ void Level1::Update()
     {
         ctrlKeyB = true;
     }
-    
-    if (window->KeyDown(VK_ESCAPE) || GameManager::endGame)
+
+    if (window->KeyDown(VK_ESCAPE)) {
+        Engine::Next<Home>();
+    } else if (GameManager::endGame)
     {
         GameManager::endGame = false;
         // volta para a tela de abertura

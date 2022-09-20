@@ -23,7 +23,7 @@ void EndGame::Init()
 	if (GameManager::draw) {
 		audio->Play(DRAWMUSIC);
 		GameManager::draw = false;
-		backg = new Sprite("Resources/draw.jpg");
+		backg = new Sprite("Resources/TELA-EMPATE.png");
 
 	}
 	else {

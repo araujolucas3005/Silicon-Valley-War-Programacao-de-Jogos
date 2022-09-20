@@ -29,6 +29,7 @@ class Food : public Object
 private:
     Sprite * sprite = nullptr;          // sprite da comida
     Timer* timer = nullptr;
+    Timer* auxTimer = nullptr;
 
 public:
     Food(FOODTYPE, float, float);       // construtor
@@ -38,11 +39,6 @@ public:
     void Update();                      // atualização do objeto
     void Draw();                        // desenho do objeto
 };
-
-// ---------------------------------------------------------------------------------
-
-inline void Food::Draw()
-{ sprite->Draw(x, y, z); }
 
 // ---------------------------------------------------------------------------------
 
