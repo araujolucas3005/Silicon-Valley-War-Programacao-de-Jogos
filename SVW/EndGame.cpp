@@ -9,31 +9,37 @@
 #include "EndGame.h"
 #include "Home.h"
 #include "GameManager.h"
-enum { MUSIC };
+enum { VICTORYMUSIC, DRAWMUSIC};
 
 // ------------------------------------------------------------------------------
 
 void EndGame::Init()
 {
 	audio = new Audio();
-	audio->Add(MUSIC, "Resources/VictorySound.wav");
-	audio->Play(MUSIC);
+	audio->Add(VICTORYMUSIC, "Resources/VictorySound.wav");
+	audio->Add(DRAWMUSIC, "Resources/DrawSound.wav");
+
 
 	if (GameManager::draw) {
-
+		audio->Play(DRAWMUSIC);
 		GameManager::draw = false;
 		backg = new Sprite("Resources/draw.jpg");
 
-	} else if (GameManager::winner == PLAYER1) {
+	}
+	else {
+		audio->Play(VICTORYMUSIC);
+		if (GameManager::winner == PLAYER1) {
 
-		player = new Sprite(GameManager::playerImages[0] + "_grande.png");
-		backg = new Sprite("Resources/tela-vencedor-p1.png");
+			player = new Sprite(GameManager::playerImages[0] + "_grande.png");
+			backg = new Sprite("Resources/tela-vencedor-p1.png");
 
-	} else {
+		}
+		else {
 
-		player = new Sprite(GameManager::playerImages[1] + "_grande.png");
-		backg = new Sprite("Resources/tela-vencedor-p2.png");
+			player = new Sprite(GameManager::playerImages[1] + "_grande.png");
+			backg = new Sprite("Resources/tela-vencedor-p2.png");
 
+		}
 	}
 }
 
