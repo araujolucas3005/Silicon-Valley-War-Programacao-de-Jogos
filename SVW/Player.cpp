@@ -612,17 +612,19 @@ void Player::Update()
 
 		Image* bulletImg = nullptr;
 
+		bool hori = false;
+
 		switch (currState) {
-		case UP: pVelX = 0; pVelY = -250.0f; pX = X(); pY = Y() - 15; bulletImg = specialPower ? specialPowerUp : bulletVerImg; break;
-		case LEFT: pVelX = -250.0f; pVelY = 0;  pX = X() - 15; pY = Y(); bulletImg = specialPower ? specialPowerLeft : bulletHoriImg;  break;
-		case DOWN: pVelX = 0; pVelY = 250.0f;  pX = X(); pY = Y() + 15; bulletImg = specialPower ? specialPowerDown : bulletVerImg;  break;
-		case RIGHT: pVelX = 250.0f; pVelY = 0;  pX = X() + 15; pY = Y(); bulletImg = specialPower ? specialPowerRight : bulletHoriImg; break;
+		case UP: pVelX = 0; pVelY = -250.0f; pX = X(); pY = Y() - 15; bulletImg = specialPower ? specialPowerUp : bulletVerImg; hori = true; break;
+		case LEFT: pVelX = -250.0f; pVelY = 0;  pX = X() - 15; pY = Y(); bulletImg = specialPower ? specialPowerLeft : bulletHoriImg; hori = false; break;
+		case DOWN: pVelX = 0; pVelY = 250.0f;  pX = X(); pY = Y() + 15; bulletImg = specialPower ? specialPowerDown : bulletVerImg; hori = true; break;
+		case RIGHT: pVelX = 250.0f; pVelY = 0;  pX = X() + 15; pY = Y(); bulletImg = specialPower ? specialPowerRight : bulletHoriImg; hori = false; break;
 		}
 
 		if (bulletImg) {
 			Projectile* b = new Projectile(this, pVelX, pVelY, bulletImg);
 
-			if (bulletImg == bulletVerImg) {
+			if (hori) {
 				b->BBox(new Rect(-2.5, 9, 2.5, -9));
 			}
 			else {
